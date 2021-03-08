@@ -1,4 +1,5 @@
-import { Controller, Post, Get, Param } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { PartyManagerDto } from './dtos/party-manager.dto';
 
 /*
 */
@@ -10,8 +11,8 @@ export class PartyManagerController {
     return 'Nothing';
   }
 
-  @Post(':user')
-  enterParty(@Param('user') user: string): string {
+  @Post('')
+  enterParty(@Body() partyManagerDto: PartyManagerDto): string {
     return 'asd';
   }
 }
