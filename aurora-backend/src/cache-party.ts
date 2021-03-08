@@ -1,5 +1,5 @@
 /* Party List Caching */
-const partyStructure = {
+export const partyStructure = {
   time: new Date(),
   user: [],
 };

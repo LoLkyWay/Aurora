@@ -1,9 +1,37 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { PartyManagerDto } from './dtos/party-manager.dto';
 import { party } from '../cache-party';
+import { PartyManager } from './party-manager';
+import { CREATE_PARTY, ENTER_PARTY } from 'src/constants';
+import { FIND_PARTY } from '../constants';
+import { PartyUserManager } from './party-user-manager';
 
 /*
+ Party Manager의 Contoller
+ 주요 명령어들을 호출하는 곳
 */
+
+
+const commandSetting = [
+  {
+    name: FIND_PARTY,
+    command: [
+      '파',
+      '파티',
+      '파티리',
+      '파티리스',
+      '파티리스트',
+    ]
+  },
+  {
+    name: CREATE_PARTY,
+    command: [],
+  },
+  {
+    name: ENTER_PARTY,
+    command: ['파티참', '파티참여'],
+  },
+]
 
 @Controller('party-manager')
 export class PartyManagerController {
@@ -20,39 +48,27 @@ export class PartyManagerController {
     }
 
     if (msg[0] === '/') {
+      const rmSlash = msg.slice(1);
+      console.log('rmSlash', rmSlash)
+      const partyManager = new PartyManager(rmSlash);
+      const partyUserManager = new PartyUserManager(rmSlash, sender);
       const command = msg.split(' ')[0].slice(1);
-      if (
-        command === '파'
-        || command === '파티'
-        || command === '파티리'
-        || command === '파티리스'
-        || command === '파티리스트'
-      ) {
-        return partyTranslateString(party);
-      } else if (
-        command === '파티참'
-        || command === '파티참여'
-      ) {
-        const [_, partyName] = msg.split(' ');
-        if (!partyName) {
-          return '참여할 파티를 입력해주세요!';
-        }
 
-        if (Object.keys(party).includes(partyName)) {
-          // add user
-          if (party[partyName].user.includes(sender)) {
-            return `${partyTranslateString(party)}\n 이미 참여한 파티입니다!`;
+      console.log('command', command)
+
+      for (let i=0; i<commandSetting.length; i++) {
+        const type = commandSetting[i];
+        if (type.command.includes(command)) {
+          if (type.name === FIND_PARTY) {
+            return partyTranslateString(partyManager.findParty());
+          } else if (type.name === ENTER_PARTY) {
+            return partyTranslateString(partyUserManager.enterParty());
           }
-          party[partyName].user.push(sender);
-          return partyTranslateString(party);
-        }
-         else {
-          return '참여할 파티가 존재하지 않습니다.'
         }
       }
     }
 
-    return 'asd';
+    return '비정상적인 명령어 입니다 (X_x)';
   }
 }
 
