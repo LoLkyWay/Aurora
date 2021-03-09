@@ -5,6 +5,7 @@ import { PartyManager } from './party-manager';
 import { CREATE_PARTY, ENTER_PARTY } from 'src/constants';
 import { FIND_PARTY } from '../constants';
 import { PartyUserManager } from './party-user-manager';
+import { Cron } from '@nestjs/schedule';
 
 /*
  Party Manager의 Contoller
@@ -69,8 +70,28 @@ export class PartyManagerController {
 
     return '비정상적인 명령어 입니다 (X_x)';
   }
+
+
+  /* Party Delete Scheduler Every minute on the 0th second */
+  @Cron('0 * * * * *')
+  deletePartyScheduler() {
+    const curDate = new Date();
+    Object.keys(party).map(partyName => {
+      if (curDate > party[partyName].time) {
+        delete party[partyName]
+      }
+    });
+    console.log('party', party)
+  }
 }
 
+
+/*
+  translateParty2String
+  설명: party Object를 String으로 변환하는 함수
+  인자:
+   - message: 파티 목록의 맨 마지막에 붙혀줄 메시지
+*/
 const translateParty2String = (message = '') => {
   const keys = Object.keys(party);
   let str = '';

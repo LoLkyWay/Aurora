@@ -63,7 +63,8 @@ export class PartyManager {
       curDate.getMonth(),
       curDate.getDate(),
       hours,
-      minutes
+      minutes,
+      10
     );
 
     party[partyName] = {

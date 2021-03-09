@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PartyManagerModule } from './party-manager/party-manager.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { PartyManagerModule } from './party-manager/party-manager.module';
       }),
     }),
     PartyManagerModule,
-    TypeOrmModule
+    TypeOrmModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [],
   providers: [],
