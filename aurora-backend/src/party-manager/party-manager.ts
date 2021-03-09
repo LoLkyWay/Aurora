@@ -1,4 +1,5 @@
 import { party, partyStructure } from '../cache-party';
+import { deepCopy } from 'deep-copy-ts';
 
 export class PartyManager {
   private msg: string;
@@ -68,7 +69,7 @@ export class PartyManager {
     );
 
     party[partyName] = {
-      ...partyStructure,
+      ...deepCopy(partyStructure),
       time: partyDate,
     }
 
@@ -76,6 +77,19 @@ export class PartyManager {
   }
 
   deleteParty() {
+    const partyName = this.argument;
+    if (!partyName) {
+      return '삭제할 파티를 입력해주세요!';
+    }
 
+    const parties = Object.keys(party);
+    for (let i=0; i<parties.length; i++) {
+      if (parties[i] === partyName) {
+        delete party[partyName]
+        return `${partyName} 파티가 삭제되었습니다!`
+      }
+    }
+
+    return '존재하지 않는 파티입니다.';
   }
 }

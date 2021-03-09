@@ -2,7 +2,7 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { PartyManagerDto } from './dtos/party-manager.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './party-manager';
-import { CREATE_PARTY, ENTER_PARTY } from 'src/constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY } from 'src/constants';
 import { FIND_PARTY } from '../constants';
 import { PartyUserManager } from './party-user-manager';
 import { Cron } from '@nestjs/schedule';
@@ -16,13 +16,7 @@ import { Cron } from '@nestjs/schedule';
 const commandSetting = [
   {
     name: FIND_PARTY,
-    command: [
-      '파',
-      '파티',
-      '파티리',
-      '파티리스',
-      '파티리스트',
-    ]
+    command: ['파', '파티', '파티리', '파티리스', '파티리스트']
   },
   {
     name: CREATE_PARTY,
@@ -32,6 +26,10 @@ const commandSetting = [
     name: ENTER_PARTY,
     command: ['파티참', '파티참여'],
   },
+  {
+    name: DELETE_PARTY,
+    command: ['파티삭', '파티삭제', '파티제', '파티제거'],
+  }
 ]
 
 @Controller('party-manager')
@@ -61,6 +59,8 @@ export class PartyManagerController {
             return translateParty2String(partyManager.findParty());
           } else if (type.name === CREATE_PARTY) {
             return translateParty2String(partyManager.createParty());
+          } else if (type.name === DELETE_PARTY) {
+            return translateParty2String(partyManager.deleteParty());
           } else if (type.name === ENTER_PARTY) {
             return translateParty2String(partyUserManager.enterParty());
           }
@@ -81,7 +81,6 @@ export class PartyManagerController {
         delete party[partyName]
       }
     });
-    console.log('party', party)
   }
 }
 
