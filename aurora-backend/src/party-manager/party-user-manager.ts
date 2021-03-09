@@ -29,13 +29,12 @@ export class PartyUserManager {
       }
       party[partyName].user.push(this.sender);
       return '파티에 참여하였습니다.';
-    }
-     else {
-      return '참여할 파티가 존재하지 않습니다.'
+    } else {
+      return '참여할 파티가 존재하지 않습니다.';
     }
   }
 
   exitParty() {
-
+    return '떠날 파티가 없습니다.. ㅜ.ㅜ';
   }
 }
