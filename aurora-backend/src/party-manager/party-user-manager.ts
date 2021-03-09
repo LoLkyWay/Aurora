@@ -28,7 +28,7 @@ export class PartyUserManager {
         return `이미 참여한 파티입니다!`;
       }
       party[partyName].user.push(this.sender);
-      return party;
+      return '파티에 참여하였습니다.';
     }
      else {
       return '참여할 파티가 존재하지 않습니다.'

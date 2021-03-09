@@ -1,3 +1,5 @@
+import { deepCopy } from 'deep-copy-ts';
+
 /* Party List Caching */
 export const partyStructure = {
   time: new Date(),
@@ -6,6 +8,6 @@ export const partyStructure = {
 
 export const party = {
   '내전': {
-    ...partyStructure
+    ...deepCopy(partyStructure)
   }
 };

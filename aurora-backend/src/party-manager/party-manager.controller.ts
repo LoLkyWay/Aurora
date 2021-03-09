@@ -8,7 +8,7 @@ import { PartyUserManager } from './party-user-manager';
 
 /*
  Party Manager의 Contoller
- 주요 명령어들을 호출하는 곳
+ 주요 명령어들을 선언 및 호출하는 곳
 */
 
 
@@ -25,7 +25,7 @@ const commandSetting = [
   },
   {
     name: CREATE_PARTY,
-    command: [],
+    command: ['파티생', '파티생성'],
   },
   {
     name: ENTER_PARTY,
@@ -48,21 +48,20 @@ export class PartyManagerController {
     }
 
     if (msg[0] === '/') {
-      const rmSlash = msg.slice(1);
-      console.log('rmSlash', rmSlash)
-      const partyManager = new PartyManager(rmSlash);
-      const partyUserManager = new PartyUserManager(rmSlash, sender);
+      const userCommand = msg.slice(1);
+      const partyManager = new PartyManager(userCommand);
+      const partyUserManager = new PartyUserManager(userCommand, sender);
       const command = msg.split(' ')[0].slice(1);
-
-      console.log('command', command)
 
       for (let i=0; i<commandSetting.length; i++) {
         const type = commandSetting[i];
         if (type.command.includes(command)) {
           if (type.name === FIND_PARTY) {
-            return partyTranslateString(partyManager.findParty());
+            return translateParty2String(partyManager.findParty());
+          } else if (type.name === CREATE_PARTY) {
+            return translateParty2String(partyManager.createParty());
           } else if (type.name === ENTER_PARTY) {
-            return partyTranslateString(partyUserManager.enterParty());
+            return translateParty2String(partyUserManager.enterParty());
           }
         }
       }
@@ -72,7 +71,7 @@ export class PartyManagerController {
   }
 }
 
-const partyTranslateString = (party) => {
+const translateParty2String = (message = '') => {
   const keys = Object.keys(party);
   let str = '';
   keys.map(key => {
@@ -85,6 +84,11 @@ const partyTranslateString = (party) => {
         str += `${index+1}. ${user}\n`;
       });
     }
+    str += '-------------\n'
   });
+
+  if (message) {
+    str += `\n\n${message}`;
+  }
   return str;
 }
