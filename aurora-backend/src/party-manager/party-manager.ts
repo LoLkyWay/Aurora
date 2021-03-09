@@ -1,22 +1,21 @@
 import { party, partyStructure } from '../cache-party';
 import { deepCopy } from 'deep-copy-ts';
+import { translateParty2String } from './party-manager.controller';
 
 export class PartyManager {
-  private msg: string;
   private command: string;
   private argument: string;
 
   constructor (
-    msg: string,
+    command: string,
   ) {
-    this.msg = msg;
-    const splitMsg = msg.split(' ');
+    const splitMsg = command.split(' ');
     this.command = splitMsg[0];
     this.argument = splitMsg.slice(1).join(' ');
   }
 
   findParty () {
-    return '지금까지의 파티 목록입니다!';
+    return translateParty2String('지금까지의 파티 목록입니다!');
   }
 
   createParty() {
@@ -36,7 +35,7 @@ export class PartyManager {
     const parties = Object.keys(party);
     for (let i=0; i<parties.length; i++) {
       if (parties[i] === partyName) {
-        return '이미 존재하는 파티입니다.'
+        return translateParty2String('이미 존재하는 파티입니다.');
       }
     }
 
@@ -73,7 +72,7 @@ export class PartyManager {
       time: partyDate,
     }
 
-    return '파티가 생성되었습니다!';
+    return translateParty2String('파티가 생성되었습니다!');
   }
 
   deleteParty() {
@@ -86,7 +85,7 @@ export class PartyManager {
     for (let i=0; i<parties.length; i++) {
       if (parties[i] === partyName) {
         delete party[partyName]
-        return `${partyName} 파티가 삭제되었습니다!`
+        return translateParty2String(`${partyName} 파티가 삭제되었습니다!`);
       }
     }
 

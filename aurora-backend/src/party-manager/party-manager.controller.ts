@@ -13,7 +13,6 @@ import { commandList } from './command/index';
  주요 명령어들을 선언 및 호출하는 곳
 */
 
-
 @Controller('party-manager')
 export class PartyManagerController {
   @Post()
@@ -39,15 +38,15 @@ export class PartyManagerController {
         if (type.command.includes(command)) {
           switch (type.name) {
             case FIND_PARTY:
-              return translateParty2String(partyManager.findParty());
+              return partyManager.findParty();
             case CREATE_PARTY:
-              return translateParty2String(partyManager.createParty());
+              return partyManager.createParty();
             case DELETE_PARTY:
-              return translateParty2String(partyManager.deleteParty());
+              return partyManager.deleteParty();
             case ENTER_PARTY:
-              return translateParty2String(partyUserManager.enterParty());
+              return partyUserManager.enterParty();
             case EXIT_PARTY:
-              return translateParty2String(partyUserManager.exitParty());
+              return partyUserManager.exitParty();
           }
         }
       }
@@ -74,12 +73,18 @@ export class PartyManagerController {
   인자:
    - message: 파티 목록의 맨 마지막에 붙혀줄 메시지
 */
-const translateParty2String = (message = '') => {
+export const translateParty2String = (message = '') => {
   const keys = Object.keys(party);
   let str = '';
   keys.map(key => {
     const date = party[key].time;
-    str += `${key} - ${date.getHours()}시 ${date.getMinutes()}분\n`;
+
+    str += `${key} - ${date.getHours()}시`;
+    if (date.getMinutes() > 0) {
+      str += ` ${date.getMinutes()}분`;
+    }
+    str += '\n';
+
     if (party[key].user.length === 0) {
       str += `=== 없음 ===\n`;
     } else {
