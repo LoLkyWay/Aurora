@@ -13,6 +13,10 @@ import { Cron } from '@nestjs/schedule';
 */
 
 
+/*
+  commandSetting
+  주요 명령어 등록하는 변수
+*/
 const commandSetting = [
   {
     name: FIND_PARTY,
@@ -71,7 +75,6 @@ export class PartyManagerController {
     return '비정상적인 명령어 입니다 (X_x)';
   }
 
-
   /* Party Delete Scheduler Every minute on the 0th second */
   @Cron('0 * * * * *')
   deletePartyScheduler() {
@@ -83,7 +86,6 @@ export class PartyManagerController {
     });
   }
 }
-
 
 /*
   translateParty2String
