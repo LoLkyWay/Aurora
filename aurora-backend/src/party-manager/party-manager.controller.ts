@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { chatBotInputDto } from '../common.dtos/chatBot.dto';
+import { chatBotInputDto } from '../common/dtos/chatBot.dto';
 import { party, partyStructure } from '../cache-party';
 import { PartyManager } from './party-manager';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY } from 'src/constants';
