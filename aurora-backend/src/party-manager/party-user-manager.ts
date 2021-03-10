@@ -30,6 +30,13 @@ export class PartyUserManager {
       if (party[partyName].user.includes(this.sender)) {
         return `이미 참여한 파티입니다!`;
       }
+      let maximum = 5;
+      if (partyName.includes('내전')) {
+        maximum = 10;
+      }
+      if (party[partyName].user.length >= maximum) {
+        return '파티가 꽉 찼습니다 ㅠ.ㅠ';
+      }
       party[partyName].user.push(this.sender);
       return translateParty2String('파티에 참여하였습니다.');
     }
