@@ -113,24 +113,29 @@ export class CommandManagerController {
 export const translateParty2String = (message = '') => {
   const keys = Object.keys(party);
   let str = '';
-  keys.map(key => {
-    const date = party[key].time;
 
-    str += `${key} - ${date.getHours()}시`;
-    if (date.getMinutes() > 0) {
-      str += ` ${date.getMinutes()}분`;
-    }
-    str += '\n';
+  if (keys.length === 0) {
+    str = '[파티없음]\n';
+  } else {
+    keys.map(key => {
+      const date = party[key].time;
 
-    if (party[key].user.length === 0) {
-      str += `--- 없음 ---\n`;
-    } else {
-      party[key].user.map((user, index) => {
-        str += `${index+1}. ${user}\n`;
-      });
-    }
-    str += '\n'
-  });
+      str += `${key} - ${date.getHours()}시`;
+      if (date.getMinutes() > 0) {
+        str += ` ${date.getMinutes()}분`;
+      }
+      str += '\n';
+
+      if (party[key].user.length === 0) {
+        str += `--- 없음 ---\n`;
+      } else {
+        party[key].user.map((user, index) => {
+          str += `${index+1}. ${user}\n`;
+        });
+      }
+      str += '\n'
+    });
+  }
 
   if (message) {
     str += `\n\n${message}`;
