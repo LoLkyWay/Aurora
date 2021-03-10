@@ -1,12 +1,13 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { PartyManagerDto } from './dtos/party-manager.dto';
-import { party } from '../cache-party';
+import { party, partyStructure } from '../cache-party';
 import { PartyManager } from './party-manager';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY } from 'src/constants';
 import { FIND_PARTY } from '../constants';
 import { PartyUserManager } from './party-user-manager';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './command/index';
+import { deepCopy } from 'deep-copy-ts';
 
 /*
  Party Manager의 Contoller
@@ -64,6 +65,38 @@ export class PartyManagerController {
         delete party[partyName]
       }
     });
+  }
+
+  /*
+    매일 정각에 파티 초기화
+  */
+  @Cron('* * 0 * * *')
+  dailyPartyDefine() {
+    const curDate = new Date();
+    const rank = new Date(
+      curDate.getFullYear(),
+      curDate.getMonth(),
+      curDate.getDate(),
+      21,
+      0,
+      10
+    );
+    const teamFight = new Date(
+      curDate.getFullYear(),
+      curDate.getMonth(),
+      curDate.getDate(),
+      22,
+      0,
+      10
+    );
+    party['매일자랭'] = {
+      ...deepCopy(partyStructure),
+      time: rank,
+    };
+    party['정기내전'] = {
+      ...deepCopy(partyStructure),
+      time: teamFight,
+    };
   }
 }
 
