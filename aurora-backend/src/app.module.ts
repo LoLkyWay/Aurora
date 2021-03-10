@@ -2,13 +2,16 @@ import { Module } from '@nestjs/common';
 import * as Joi from 'joi';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PartyManagerModule } from './party-manager/party-manager.module';
+import { CommandManagerModule } from './command-manager/command-manager.module';
 import { ScheduleModule } from '@nestjs/schedule';
-import { UserCustomCommandController } from './user-custom-command/user-custom-command.controller';
+import { UserCustomCommandModule } from './user-custom-command/user-custom-command.module';
+
+import { Keyword } from './user-custom-command/entities/keyword.entitiy';
+import { Commands } from './user-custom-command/entities/commands.entitiy';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
+ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
       ignoreEnvFile: process.env.NODE_ENV === 'production',
@@ -21,7 +24,8 @@ import { UserCustomCommandController } from './user-custom-command/user-custom-c
         DB_PASSSWORD: Joi.string(),
       }),
     }),
-    PartyManagerModule,
+    CommandManagerModule,
+    UserCustomCommandModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -31,11 +35,11 @@ import { UserCustomCommandController } from './user-custom-command/user-custom-c
       password: process.env.DB_PASSSWORD,
       synchronize: true,
       logging: process.env.NODE_ENV === 'dev',
-      entities: [],
+      entities: [Commands, Keyword],
     }),
     ScheduleModule.forRoot()
   ],
-  controllers: [UserCustomCommandController],
+  controllers: [],
   providers: [],
 })
 export class AppModule {}

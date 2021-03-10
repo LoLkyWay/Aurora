@@ -1,5 +1,5 @@
 import { party } from '../cache-party';
-import { translateParty2String } from './party-manager.controller';
+import { translateParty2String } from './command-manager.controller';
 
 export class PartyUserManager {
   private sender: string;

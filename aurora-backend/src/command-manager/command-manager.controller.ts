@@ -15,10 +15,10 @@ import { PartyHelp } from './party-help';
  주요 명령어들을 선언 및 호출하는 곳
 */
 
-@Controller('party-manager')
-export class PartyManagerController {
+@Controller('command-manager')
+export class CommandManagerController {
   @Post()
-  partyManage(@Body() {
+  commandManage(@Body() {
     room,
     msg,
     sender,

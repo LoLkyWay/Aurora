@@ -1,22 +1,22 @@
 import { type } from "os";
 import { CoreEntity } from "src/common/entities/core.entities";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
-import { Keywords } from "./keywords.entitiy";
+import { Keyword } from "./keyword.entitiy";
 
 @Entity()
 export class Commands extends CoreEntity {
   @Column()
   outputText: string;
 
-  @Column()
+  // @Column()
   @ManyToOne(
-    type => Keywords,
-    keywords => keywords.id,
-    { onDelete: 'SET NULL', eager: true }
+    type => Keyword,
+    keyword => keyword.commands,
+    { onDelete: 'CASCADE' },
   )
-  keyword: Keywords;
+  keyword: Keyword;
 
-  @RelationId((keyword: Keywords) => keyword.id)
+  @RelationId((command: Commands) => command.keyword)
   keywordId: number;
 
   @Column()
