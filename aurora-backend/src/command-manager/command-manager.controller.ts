@@ -73,7 +73,6 @@ export class CommandManagerController {
 
   /*
     매일 정각에 파티 초기화
-  */
   @Cron('* * 0 * * *')
   dailyPartyDefine() {
     const curDate = new Date();
@@ -102,6 +101,7 @@ export class CommandManagerController {
       time: teamFight,
     };
   }
+  */
 }
 
 /*
@@ -123,13 +123,13 @@ export const translateParty2String = (message = '') => {
     str += '\n';
 
     if (party[key].user.length === 0) {
-      str += `=== 없음 ===\n`;
+      str += `--- 없음 ---\n`;
     } else {
       party[key].user.map((user, index) => {
         str += `${index+1}. ${user}\n`;
       });
     }
-    str += '-------------\n'
+    str += '\n'
   });
 
   if (message) {
