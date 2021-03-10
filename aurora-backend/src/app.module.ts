@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PartyManagerModule } from './party-manager/party-manager.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { UserCustomCommandController } from './user-custom-command/user-custom-command.controller';
 
 @Module({
   imports: [
@@ -34,10 +35,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     ScheduleModule.forRoot()
   ],
-  controllers: [],
+  controllers: [UserCustomCommandController],
   providers: [],
 })
 export class AppModule {}
-
-console.log('process.env.DB_PORT', process.env.DB_PORT)
-console.log('process.env.DB_PASSSWORD', process.env.DB_PASSSWORD)

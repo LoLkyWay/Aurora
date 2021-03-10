@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { PartyManagerDto } from './dtos/party-manager.dto';
+import { chatBotInputDto } from '../common.dtos/chatBot.dto';
 import { party, partyStructure } from '../cache-party';
 import { PartyManager } from './party-manager';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY } from 'src/constants';
@@ -24,7 +24,7 @@ export class PartyManagerController {
     sender,
     isGroupChat,
     image,
-  }: PartyManagerDto): string {
+  }: chatBotInputDto): string {
     if (msg === undefined || msg === '') {
       return '비정상적인 명령어 입니다 (X_x)';
     }
