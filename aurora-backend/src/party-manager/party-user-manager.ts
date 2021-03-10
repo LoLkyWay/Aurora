@@ -32,9 +32,8 @@ export class PartyUserManager {
       }
       party[partyName].user.push(this.sender);
       return translateParty2String('파티에 참여하였습니다.');
-    } else {
-      return '참여할 파티가 존재하지 않습니다.';
     }
+    return '참여할 파티가 존재하지 않습니다.';
   }
 
   /*
@@ -42,6 +41,19 @@ export class PartyUserManager {
      - 파티에 떠나는 유저
   */
   exitParty() {
-    return translateParty2String('떠날 파티가 없습니다.. ㅜ.ㅜ');
+    const partyName = this.argument;
+    if (!partyName) {
+      return '떠날 파티를 입력해주세요!';
+    }
+
+    if (Object.keys(party).includes(partyName)) {
+      const idx = party[partyName].user.indexOf(this.sender);
+      if (idx !== -1) {
+        party[partyName].user.splice(idx, 1);
+        return translateParty2String(`${partyName} 파티에서 떠났습니다~ :>`);
+      }
+      return '떠날 파티가 없습니다.. ㅜ.ㅜ';
+    }
+    return translateParty2String('존재하지 않는 파티입니다. O_o!');
   }
 }
