@@ -1,5 +1,5 @@
 // Manger Parameters
-export class PartyManagerDto {
+export class chatBotInputDto {
   room: string; // 방 이름
   msg: string; // 메시지
   sender: string; // 보낸이
