@@ -9,11 +9,15 @@ import { ScheduleModule } from '@nestjs/schedule';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env',
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
       ignoreEnvFile: process.env.NODE_ENV === 'production',
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('dev', 'production', 'test').required(),
         DB_HOST: Joi.string(),
+        DB_PORT: Joi.string(),
+        DB_DATABASE: Joi.string(),
+        DB_USER: Joi.string(),
+        DB_PASSSWORD: Joi.string(),
       }),
     }),
     PartyManagerModule,
