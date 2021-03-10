@@ -2,12 +2,13 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { PartyManagerDto } from './dtos/party-manager.dto';
 import { party, partyStructure } from '../cache-party';
 import { PartyManager } from './party-manager';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY } from 'src/constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY } from 'src/constants';
 import { FIND_PARTY } from '../constants';
 import { PartyUserManager } from './party-user-manager';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './command/index';
 import { deepCopy } from 'deep-copy-ts';
+import { PartyHelp } from './party-help';
 
 /*
  Party Manager의 Contoller
@@ -32,6 +33,7 @@ export class PartyManagerController {
       const userCommand = msg.slice(1);
       const partyManager = new PartyManager(userCommand);
       const partyUserManager = new PartyUserManager(userCommand, sender);
+      const partyHelp = new PartyHelp();
       const command = msg.split(' ')[0].slice(1);
 
       for (let i=0; i<commandList.length; i++) {
@@ -48,6 +50,8 @@ export class PartyManagerController {
               return partyUserManager.enterParty();
             case EXIT_PARTY:
               return partyUserManager.exitParty();
+            case HELP_PARTY:
+              return partyHelp.printHelp();
           }
         }
       }
