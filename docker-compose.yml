@@ -17,6 +17,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+    restart: always
 
   nestjs:
     build:
