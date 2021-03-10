@@ -57,7 +57,7 @@ export class PartyUserManager {
       const idx = party[partyName].user.indexOf(this.sender);
       if (idx !== -1) {
         party[partyName].user.splice(idx, 1);
-        return translateParty2String(`${partyName} 파티에서 떠났습니다~ :>`);
+        return translateParty2String(`${partyName} 파티에서 떠났습니다~ :D`);
       }
       return '떠날 파티가 없습니다.. ㅜ.ㅜ';
     }
