@@ -1,4 +1,4 @@
-import { commandList } from './command/index';
+import { commandList } from './keywords/index';
 
 export class PartyHelp {
   constructor() {}

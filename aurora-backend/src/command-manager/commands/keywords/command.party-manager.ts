@@ -2,7 +2,7 @@ import {
   FIND_PARTY,
   CREATE_PARTY,
   DELETE_PARTY,
-} from '../../constants';
+} from '../../../constants';
 
 /*
   Party 관리에 관련된 명령어 목록

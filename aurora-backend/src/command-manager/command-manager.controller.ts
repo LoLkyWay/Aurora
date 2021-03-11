@@ -1,14 +1,14 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { chatBotInputDto } from '../common/dtos/chatBot.dto';
 import { party, partyStructure } from '../cache-party';
-import { PartyManager } from './party-manager';
+import { PartyManager } from './commands/party-manager';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY } from 'src/constants';
 import { FIND_PARTY } from '../constants';
-import { PartyUserManager } from './party-user-manager';
+import { PartyUserManager } from './commands/party-user-manager';
 import { Cron } from '@nestjs/schedule';
-import { commandList } from './command/index';
+import { commandList } from './commands/keywords/index';
 import { deepCopy } from 'deep-copy-ts';
-import { PartyHelp } from './party-help';
+import { PartyHelp } from './commands/party-help';
 
 /*
  Party Manager의 Contoller

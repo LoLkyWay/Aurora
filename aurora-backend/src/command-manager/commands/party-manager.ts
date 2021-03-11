@@ -1,6 +1,6 @@
-import { party, partyStructure } from '../cache-party';
+import { party, partyStructure } from '../../cache-party';
 import { deepCopy } from 'deep-copy-ts';
-import { translateParty2String } from './command-manager.controller';
+import { translateParty2String } from '../command-manager.controller';
 
 export class PartyManager {
   private command: string;
