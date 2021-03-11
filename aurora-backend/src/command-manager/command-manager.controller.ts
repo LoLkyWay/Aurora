@@ -45,7 +45,7 @@ export class CommandManagerController {
         if (type.command.includes(command)) {
           switch (type.name) {
             case FIND_PARTY:
-              return this.partyManager.findParty();
+              return this.partyManager.findParty(chatBotInput);
             case CREATE_PARTY:
               return this.partyManager.createParty(chatBotInput);
             case DELETE_PARTY:
@@ -73,11 +73,13 @@ export class CommandManagerController {
   @Cron('0 * * * * *')
   deletePartyScheduler() {
     const curDate = new Date();
-    Object.keys(party).map(partyName => {
-      if (curDate > party[partyName].time) {
-        delete party[partyName]
-      }
-    });
+    Object.keys(party).map(roomName =>
+      Object.keys(party[roomName]).map(partyName => {
+        if (curDate > party[partyName].time) {
+          delete party[partyName]
+        }
+      })
+    );
   }
 
   /*
@@ -119,15 +121,24 @@ export class CommandManagerController {
   인자:
    - message: 파티 목록의 맨 마지막에 붙혀줄 메시지
 */
-export const translateParty2String = (message = '') => {
-  const keys = Object.keys(party);
+export const translateParty2String = (room = '', message = '') => {
+  if (room === '') {
+    return '잘못된 방입니다.';
+  }
+
+  if (!party[room]) {
+    party[room] = {};
+  }
+
+  const myRoom = party[room];
+  const keys = Object.keys(party[room]);
   let str = '';
 
   if (keys.length === 0) {
     str = '[파티없음]';
   } else {
     keys.map(key => {
-      const date = party[key].time;
+      const date = myRoom[key].time;
 
       str += `${key} - ${date.getHours()}시`;
       if (date.getMinutes() > 0) {
@@ -135,10 +146,10 @@ export const translateParty2String = (message = '') => {
       }
       str += '\n';
 
-      if (party[key].user.length === 0) {
+      if (myRoom[key].user.length === 0) {
         str += `--- 없음 ---\n`;
       } else {
-        party[key].user.map((user, index) => {
+        myRoom[key].user.map((user, index) => {
           str += `${index+1}. ${user}\n`;
         });
       }

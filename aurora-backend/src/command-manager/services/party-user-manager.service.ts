@@ -18,7 +18,7 @@ export class PartyUserManager {
   enterParty(
     chatBotInput :ChatBotInput
   ): ChatBotOutput {
-    const { sender } = chatBotInput;
+    const { room, sender } = chatBotInput;
     const [_, partyName] = trimInput(chatBotInput);
     if (!partyName) {
       return {
@@ -27,8 +27,12 @@ export class PartyUserManager {
       }
     }
 
-    if (Object.keys(party).includes(partyName)) {
-      if (party[partyName].user.includes(sender)) {
+    if (!party[room]) {
+      party[room] = {};
+    }
+
+    if (Object.keys(party[room]).includes(partyName)) {
+      if (party[room][partyName].user.includes(sender)) {
         return {
           success: false,
           message: `이미 참여한 파티입니다!`,
@@ -38,13 +42,13 @@ export class PartyUserManager {
       if (partyName.includes('내전')) {
         maximum = 10;
       }
-      if (party[partyName].user.length >= maximum) {
+      if (party[room][partyName].user.length >= maximum) {
         return {
           success: false,
           message: '파티가 꽉 찼습니다 ㅠ.ㅠ',
         }
       }
-      party[partyName].user.push(sender);
+      party[room][partyName].user.push(sender);
 
       return {
         success: true,
@@ -65,7 +69,7 @@ export class PartyUserManager {
   exitParty(
     chatBotInput :ChatBotInput
   ): ChatBotOutput {
-    const { sender } = chatBotInput;
+    const { room, sender } = chatBotInput;
     const [_, partyName] = trimInput(chatBotInput);
 
     if (!partyName) {
@@ -75,10 +79,14 @@ export class PartyUserManager {
       }
     }
 
-    if (Object.keys(party).includes(partyName)) {
-      const idx = party[partyName].user.indexOf(sender);
+    if (!party[room]) {
+      party[room] = {};
+    }
+
+    if (Object.keys(party[room]).includes(partyName)) {
+      const idx = party[room][partyName].user.indexOf(sender);
       if (idx !== -1) {
-        party[partyName].user.splice(idx, 1);
+        party[room][partyName].user.splice(idx, 1);
         return {
           success: true,
           message: `${partyName} 파티에서 떠났습니다~ :D`,

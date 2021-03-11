@@ -33,13 +33,4 @@ export const partyStructure: partyStructureDTO = {
   user: [],
 };
 
-export const party = {
-  // '매일자랭': {
-  //   ...deepCopy(partyStructure),
-  //   time: rank,
-  // },
-  // '정기내전': {
-  //   ...deepCopy(partyStructure),
-  //   time: teamFight,
-  // },
-};
+export const party = {};

@@ -13,16 +13,19 @@ export class PartyManager {
   ) {
   }
 
-  findParty () {
+  findParty (
+    { room } :ChatBotInput
+  ): ChatBotOutput {
     return {
       success: true,
-      message: translateParty2String('지금까지의 파티 목록입니다!'),
+      message: translateParty2String(room, '지금까지의 파티 목록입니다!'),
     };
   }
 
   createParty(
     chatBotInput :ChatBotInput
   ): ChatBotOutput {
+    const { room } = chatBotInput;
     const [_, arguement] = trimInput(chatBotInput);
     const args = arguement.split(' ');
     const partyName = args[0];
@@ -43,12 +46,16 @@ export class PartyManager {
     }
 
     /* 파티 이름 중복 유효성 검사 */
-    const parties = Object.keys(party);
+    if (!party[room]) {
+      party[room] = {};
+    }
+
+    const parties = Object.keys(party[room]);
     for (let i=0; i<parties.length; i++) {
       if (parties[i] === partyName) {
         return {
           success: false,
-          message: translateParty2String('이미 존재하는 파티입니다.'),
+          message: translateParty2String(room, '이미 존재하는 파티입니다.'),
         }
       }
     }
@@ -87,20 +94,21 @@ export class PartyManager {
       10
     );
 
-    party[partyName] = {
+    party[room][partyName] = {
       ...deepCopy(partyStructure),
       time: partyDate,
     }
 
     return {
       success: true,
-      message: translateParty2String('파티가 생성되었습니다!'),
+      message: translateParty2String(room, '파티가 생성되었습니다!'),
     }
   }
 
   deleteParty(
     chatBotInput :ChatBotInput
   ): ChatBotOutput {
+    const { room } = chatBotInput;
     const [_, partyName] = trimInput(chatBotInput);
     if (!partyName) {
       return {
@@ -109,13 +117,17 @@ export class PartyManager {
       }
     }
 
-    const parties = Object.keys(party);
+    if (!party[room]) {
+      party[room] = {};
+    }
+
+    const parties = Object.keys(party[room]);
     for (let i=0; i<parties.length; i++) {
       if (parties[i] === partyName) {
-        delete party[partyName];
+        delete party[room][partyName];
         return {
           success: true,
-          message: translateParty2String(`${partyName} 파티가 삭제되었습니다!`),
+          message: translateParty2String(room, `${partyName} 파티가 삭제되었습니다!`),
         }
       }
     }
