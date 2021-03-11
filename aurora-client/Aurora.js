@@ -10,28 +10,38 @@ const scriptName = "Aurora.js";
  * (string) packageName
  */
 function response (room, msg, sender, isGroupChat, replier, imageDB, packageName) {
+
     const resourceUrl = "http://zoz0312.com:8822";
+    const myRoom = [
+        '롤키웨이(LoLky Way)',
+        '오로라개발방'
+    ];
 
-    if (room === "롤키웨이(LoLky Way)" || room === "오로라개발방"){
-    
-        let svcCd = "/user-custom-command";
-        if (msg.trim()[0] === "/"){
-            svcCd = "/command-manager";
-        }
-
-        const res = org.jsoup.Jsoup.connect(resourceUrl + svcCd)
-            .data('room', room)
-            .data('msg', msg.trim())
-            .data('sender', sender.split('/')[0])
-            .data('isGroupChat', isGroupChat)
-            .ignoreHttpErrors(true)
-            .ignoreContentType(true)
-            .post()
-            .outputSettings().prettyPrint(false);
-
-        replier.reply(res);
-
+    if (!myRoom.includes(room)) {
+        return;
     }
+
+    let svcCd = "/user-custom-command";
+
+    const flag = msg.trim()[0] === "/";
+    if (flag){
+        svcCd = "/command-manager";
+    }
+
+    const res = org.jsoup.Jsoup.connect(resourceUrl + svcCd)
+        .data('room', room)
+        .data('msg', msg.trim())
+        .data('sender', sender.split('/')[0])
+        .data('isGroupChat', isGroupChat)
+        .ignoreHttpErrors(true)
+        .ignoreContentType(true)
+        .post()
+        .outputSettings().prettyPrint(false);
+
+    if (res.success || flag) {
+        replier.reply(res.message);
+    }
+
 }
 
 /**
