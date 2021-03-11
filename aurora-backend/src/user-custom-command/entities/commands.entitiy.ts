@@ -11,7 +11,6 @@ export class Commands extends CoreEntity {
   // @Column()
   @ManyToOne(
     type => Keyword,
-    keyword => keyword.commands,
     { onDelete: 'CASCADE' },
   )
   keyword: Keyword;
@@ -21,5 +20,4 @@ export class Commands extends CoreEntity {
 
   @Column()
   userName: string;
-
 }

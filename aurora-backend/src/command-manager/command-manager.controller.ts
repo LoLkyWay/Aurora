@@ -1,14 +1,19 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { chatBotInputDto } from '../common/dtos/chatBot.dto';
+import { ChatBotInput } from '../common/dtos/chatBot.dto';
 import { party, partyStructure } from '../cache-party';
 import { PartyManager } from './commands/party-manager';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY } from 'src/constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, USER_COMMNAD } from 'src/constants';
 import { FIND_PARTY } from '../constants';
 import { PartyUserManager } from './commands/party-user-manager';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './commands/keywords/index';
 import { deepCopy } from 'deep-copy-ts';
 import { PartyHelp } from './commands/party-help';
+import { CustomUserCommand } from './commands/custom-user-command.service';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Commands } from '../user-custom-command/entities/commands.entitiy';
+import { Keyword } from '../user-custom-command/entities/keyword.entitiy';
+import { Repository } from 'typeorm';
 
 /*
  Party Manager의 Contoller
@@ -17,14 +22,14 @@ import { PartyHelp } from './commands/party-help';
 
 @Controller('command-manager')
 export class CommandManagerController {
+  constructor (
+    private customUserCommand: CustomUserCommand,
+  ) {
+  }
+
   @Post()
-  commandManage(@Body() {
-    room,
-    msg,
-    sender,
-    isGroupChat,
-    image,
-  }: chatBotInputDto): string {
+  commandManage(@Body() chatBotInput: ChatBotInput) {
+    const { msg, sender } = chatBotInput;
     if (msg === undefined || msg === '') {
       return '비정상적인 명령어 입니다 (X_x)';
     }
@@ -34,7 +39,8 @@ export class CommandManagerController {
       const partyManager = new PartyManager(userCommand);
       const partyUserManager = new PartyUserManager(userCommand, sender);
       const partyHelp = new PartyHelp();
-      const command = msg.split(' ')[0].slice(1);
+      // const customUserCommand = new CustomUserCommand(userCommand, sender);
+      const command = userCommand.split(' ')[0];
 
       for (let i=0; i<commandList.length; i++) {
         const type = commandList[i];
@@ -52,6 +58,8 @@ export class CommandManagerController {
               return partyUserManager.exitParty();
             case HELP_PARTY:
               return partyHelp.printHelp();
+            case USER_COMMNAD:
+              return this.customUserCommand.createUserCommand(chatBotInput);
           }
         }
       }

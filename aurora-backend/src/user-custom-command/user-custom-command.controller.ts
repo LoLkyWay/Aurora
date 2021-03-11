@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { chatBotInputDto } from '../common/dtos/chatBot.dto';
+import { ChatBotInput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
 
@@ -21,7 +21,7 @@ export class UserCustomCommandController {
     sender,
     isGroupChat,
     image,
-  }:chatBotInputDto): string {
+  }: ChatBotInput): string {
     return '';
   }
 }
