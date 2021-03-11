@@ -125,4 +125,18 @@ export class CustomUserCommand {
       }
     }
   }
+
+  async deleteUserCommand(
+    chatBotInput :ChatBotInput
+  ): Promise<ChatBotOutput> {
+    try {
+
+    } catch (error) {
+      return {
+        success: false,
+        message: 'DB 조회 오류!',
+        error,
+      }
+    }
+  }
 }

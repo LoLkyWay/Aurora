@@ -11,5 +11,6 @@ export const EXIT_PARTY = 'exitParty';
 
 export const HELP_PARTY = 'helpParty';
 
-export const USER_COMMNAD = 'userCommand';
+export const CREATE_USER_COMMNAD = 'createUserCommand';
 export const SHOW_USER_COMMAND_LIST = 'showUserCommandList';
+export const DELETE_USER_COMMAND = 'deleteUserCommandList';

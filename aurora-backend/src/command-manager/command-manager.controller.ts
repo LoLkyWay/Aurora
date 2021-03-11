@@ -2,8 +2,8 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, USER_COMMNAD, SHOW_USER_COMMAND_LIST } from 'src/constants';
-import { FIND_PARTY } from '../constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST } from 'src/constants';
+import { FIND_PARTY, DELETE_USER_COMMAND } from '../constants';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './services/commands/index';
@@ -56,10 +56,12 @@ export class CommandManagerController {
               return this.partyUserManager.exitParty(chatBotInput);
             case HELP_PARTY:
               return this.partyHelp.printHelp();
-            case USER_COMMNAD:
+            case CREATE_USER_COMMNAD:
               return this.customUserCommand.createUserCommand(chatBotInput);
             case SHOW_USER_COMMAND_LIST:
               return this.customUserCommand.findUserCommand(chatBotInput);
+            case DELETE_USER_COMMAND:
+              return this.customUserCommand.deleteUserCommand(chatBotInput);
           }
         }
       }
@@ -86,35 +88,13 @@ export class CommandManagerController {
 
   /*
     매일 정각에 파티 초기화
+  */
   @Cron('* * 0 * * *')
   dailyPartyDefine() {
-    const curDate = new Date();
-    const rank = new Date(
-      curDate.getFullYear(),
-      curDate.getMonth(),
-      curDate.getDate(),
-      21,
-      0,
-      10
-    );
-    const teamFight = new Date(
-      curDate.getFullYear(),
-      curDate.getMonth(),
-      curDate.getDate(),
-      22,
-      0,
-      10
-    );
-    party['매일자랭'] = {
-      ...deepCopy(partyStructure),
-      time: rank,
-    };
-    party['정기내전'] = {
-      ...deepCopy(partyStructure),
-      time: teamFight,
-    };
+    Object.keys(party).map(room => {
+      delete party[room];
+    });
   }
-  */
 }
 
 /*
