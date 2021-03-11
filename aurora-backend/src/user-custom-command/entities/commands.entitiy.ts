@@ -3,6 +3,10 @@ import { CoreEntity } from "src/common/entities/core.entities";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { Keyword } from "./keyword.entitiy";
 
+/*
+  @author AJu (zoz0312)
+  Commands: 키워드에 맞는 outputText를 보내기 위한 Table
+*/
 @Entity()
 export class Commands extends CoreEntity {
   @Column()
@@ -11,7 +15,6 @@ export class Commands extends CoreEntity {
   // @Column()
   @ManyToOne(
     type => Keyword,
-    keyword => keyword.commands,
     { onDelete: 'CASCADE' },
   )
   keyword: Keyword;
@@ -21,5 +24,4 @@ export class Commands extends CoreEntity {
 
   @Column()
   userName: string;
-
 }
