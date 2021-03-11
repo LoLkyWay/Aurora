@@ -14,7 +14,10 @@ export class PartyManager {
   }
 
   findParty () {
-    return translateParty2String('지금까지의 파티 목록입니다!');
+    return {
+      success: true,
+      message: translateParty2String('지금까지의 파티 목록입니다!'),
+    };
   }
 
   createParty(

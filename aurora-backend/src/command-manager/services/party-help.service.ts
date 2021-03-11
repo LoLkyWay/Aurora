@@ -27,6 +27,9 @@ export class PartyHelp {
       });
       commandDesc += '\n';
     });
-    return commandDesc;
+    return {
+      success: true,
+      message: commandDesc,
+    };
   }
 }

@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
-import { ChatBotInput } from '../common/dtos/chatBot.dto';
+import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, USER_COMMNAD } from 'src/constants';
@@ -25,10 +25,15 @@ export class CommandManagerController {
   ) {}
 
   @Post()
-  commandManage(@Body() chatBotInput: ChatBotInput) {
+  async commandManage(
+    @Body() chatBotInput: ChatBotInput
+  ): Promise<ChatBotOutput> {
     const { msg, sender } = chatBotInput;
     if (msg === undefined || msg === '') {
-      return '비정상적인 명령어 입니다 (X_x)';
+      return {
+        success: false,
+        message: '비정상적인 명령어 입니다 (X_x)',
+      };
     }
 
     if (msg[0] === '/') {
@@ -58,7 +63,10 @@ export class CommandManagerController {
       }
     }
 
-    return '비정상적인 명령어 입니다 (X_x)';
+    return {
+      success: false,
+      message: '비정상적인 명령어 입니다 (X_x)',
+    };
   }
 
   /* Party Delete Scheduler Every minute on the 0th second */
