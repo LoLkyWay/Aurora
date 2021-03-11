@@ -1,6 +1,7 @@
 import { USER_COMMNAD } from "src/constants";
 
 /*
+  @author AJu (zoz0312)
   User Command 추가를 위한 명령어 목록
 */
 export const commandCustomUserCommand: commandDTO[] = [

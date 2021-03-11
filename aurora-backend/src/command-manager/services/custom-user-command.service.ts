@@ -6,6 +6,10 @@ import { Keyword } from '../../user-custom-command/entities/keyword.entitiy';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 
+/*
+  @author AJu (zoz0312)
+  Custom User Command를 등록 및 삭제하는 곳
+*/
 @Injectable()
 export class CustomUserCommand {
   constructor (

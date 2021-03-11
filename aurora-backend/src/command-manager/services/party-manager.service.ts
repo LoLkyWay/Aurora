@@ -4,6 +4,10 @@ import { translateParty2String } from '../command-manager.controller';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 
+/*
+  @author AJu (zoz0312)
+  Party 관리 관련 명령어
+*/
 export class PartyManager {
   constructor (
   ) {

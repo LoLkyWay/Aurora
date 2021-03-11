@@ -11,10 +11,10 @@ import { PartyHelp } from './services/party-help.service';
 import { CustomUserCommand } from './services/custom-user-command.service';
 
 /*
- Party Manager의 Contoller
- 주요 명령어들을 선언 및 호출하는 곳
+  @author AJu (zoz0312)
+  Party Manager의 Contoller
+  주요 명령어들을 선언 및 호출하는 곳
 */
-
 @Controller('command-manager')
 export class CommandManagerController {
   constructor (

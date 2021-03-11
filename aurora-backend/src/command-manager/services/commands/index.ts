@@ -4,6 +4,7 @@ import { commandPartyHelp } from './command.party-help';
 import { commandCustomUserCommand } from './command.custom-user-command';
 
 /*
+  @author AJu (zoz0312)
   주요 명령어 묶는 곳
 */
 export const commandList: commandDTO[] = [

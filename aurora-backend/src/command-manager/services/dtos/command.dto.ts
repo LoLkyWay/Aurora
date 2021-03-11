@@ -1,3 +1,6 @@
+/*
+  @author AJu (zoz0312)
+*/
 interface commandDTO {
   name: string; // 변수 이름
   command: string[]; // 수행할 command

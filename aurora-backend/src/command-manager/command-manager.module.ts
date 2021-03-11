@@ -8,6 +8,9 @@ import { PartyManager } from './services/party-manager.service';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { PartyHelp } from './services/party-help.service';
 
+/*
+  @author AJu (zoz0312)
+*/
 @Module({
   imports: [TypeOrmModule.forFeature([Commands, Keyword])],
   controllers: [CommandManagerController],

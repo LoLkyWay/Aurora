@@ -2,6 +2,10 @@ import { party } from '../../cache-party';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 
+/*
+  @author AJu (zoz0312)
+  Party 참가 유저 관련 명령어
+*/
 export class PartyUserManager {
   constructor (
   ) {

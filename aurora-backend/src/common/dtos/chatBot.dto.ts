@@ -1,5 +1,9 @@
-// Manger Parameters
 import { CoreOutput } from './output.dto';
+
+/*
+  @author AJu (zoz0312)
+  chatBot에서 보내고 받는 인자의 DTO
+*/
 export class ChatBotInput {
   room: string; // 방 이름
   msg: string; // 메시지

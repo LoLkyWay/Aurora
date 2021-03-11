@@ -5,6 +5,10 @@ import { ChatBotInput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
 
+/*
+  @author AJu (zoz0312)
+  '/명령어'를 제외한 유저의 텍스트를 받아 처리하는 곳
+*/
 @Controller('user-custom-command')
 export class UserCustomCommandController {
   constructor(

@@ -1,6 +1,11 @@
 
 import { ChatBotInput } from './dtos/chatBot.dto';
 
+/*
+  @author AJu (zoz0312)
+  trimInput
+   - ChatBot에서 보낸 인자들을 command와 argument로 쪼개주는 함수
+*/
 export const trimInput = ({
   room,
   msg,

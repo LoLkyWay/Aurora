@@ -1,3 +1,7 @@
+/*
+  @author AJu (zoz0312)
+  공통 변수 선언
+*/
 export const FIND_PARTY = 'findParty';
 export const CREATE_PARTY = 'createParty';
 export const DELETE_PARTY = 'deleteParty';

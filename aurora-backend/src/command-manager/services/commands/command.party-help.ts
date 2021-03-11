@@ -3,6 +3,7 @@ import {
 } from '../../../constants';
 
 /*
+  @author AJu (zoz0312)
   Party 관리에 관련된 명령어 목록
 */
 export const commandPartyHelp: commandDTO[] = [
