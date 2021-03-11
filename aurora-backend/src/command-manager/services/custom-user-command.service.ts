@@ -87,4 +87,42 @@ export class CustomUserCommand {
       }
     }
   }
+
+  async findUserCommand(
+    chatBotInput :ChatBotInput
+  ): Promise<ChatBotOutput> {
+    const [_, keyword] = trimInput(chatBotInput);
+
+    if (!keyword) {
+      return {
+        success: false,
+        message: '키워드를 입력해주세요!'
+      }
+    }
+    try {
+      const outputText = await this.keyword.findOne({
+        where: { keyword },
+        relations: ['commands'],
+      });
+      const returnText = outputText.commands.map(({
+        id,
+        userName,
+        createdAt,
+        outputText,
+      }) => {
+        const date = `${createdAt.getFullYear()}/${createdAt.getMonth() + 1}/${createdAt.getDate()} ${createdAt.getHours()}:${createdAt.getMinutes()}`;
+        return `-- "${keyword}" 학습 내역 --\n[ID: ${id}, author: ${userName}, date: ${date}]\n${outputText}`
+      });
+      return {
+        success: true,
+        message: returnText.join('\n'),
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: 'DB 조회 오류!',
+        error,
+      }
+    }
+  }
 }

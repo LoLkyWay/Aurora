@@ -1,4 +1,4 @@
-import { USER_COMMNAD } from "src/constants";
+import { SHOW_USER_COMMAND_LIST, USER_COMMNAD } from "src/constants";
 
 /*
   @author AJu (zoz0312)
@@ -11,4 +11,10 @@ export const commandCustomUserCommand: commandDTO[] = [
     desc: '오로라 학습하기',
     argumentDesc: ['(학습키워드)::(내용)'],
   },
+  {
+    name: SHOW_USER_COMMAND_LIST,
+    command: ['학습내역', '가르치기내역'],
+    desc: '오로라 학습 내역보기',
+    argumentDesc: ['학습키워드'],
+  }
 ];

@@ -1,5 +1,5 @@
 import { CoreEntity } from "src/common/entities/core.entities";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 import { Commands } from "./commands.entitiy";
 
 /*
