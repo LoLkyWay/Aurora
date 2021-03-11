@@ -77,8 +77,8 @@ export class CommandManagerController {
     const curDate = new Date();
     Object.keys(party).map(roomName =>
       Object.keys(party[roomName]).map(partyName => {
-        if (curDate > party[partyName].time) {
-          delete party[partyName]
+        if (curDate > party[roomName][partyName].time) {
+          delete party[roomName][partyName]
         }
       })
     );
