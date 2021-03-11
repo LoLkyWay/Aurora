@@ -1,19 +1,14 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput } from '../common/dtos/chatBot.dto';
-import { party, partyStructure } from '../cache-party';
-import { PartyManager } from './commands/party-manager';
+import { party } from '../cache-party';
+import { PartyManager } from './services/party-manager.service';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, USER_COMMNAD } from 'src/constants';
 import { FIND_PARTY } from '../constants';
-import { PartyUserManager } from './commands/party-user-manager';
+import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
-import { commandList } from './commands/keywords/index';
-import { deepCopy } from 'deep-copy-ts';
-import { PartyHelp } from './commands/party-help';
-import { CustomUserCommand } from './commands/custom-user-command.service';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Commands } from '../user-custom-command/entities/commands.entitiy';
-import { Keyword } from '../user-custom-command/entities/keyword.entitiy';
-import { Repository } from 'typeorm';
+import { commandList } from './services/commands/index';
+import { PartyHelp } from './services/party-help.service';
+import { CustomUserCommand } from './services/custom-user-command.service';
 
 /*
  Party Manager의 Contoller
@@ -24,8 +19,10 @@ import { Repository } from 'typeorm';
 export class CommandManagerController {
   constructor (
     private customUserCommand: CustomUserCommand,
-  ) {
-  }
+    private partyManager: PartyManager,
+    private partyUserManager: PartyUserManager,
+    private partyHelp: PartyHelp,
+  ) {}
 
   @Post()
   commandManage(@Body() chatBotInput: ChatBotInput) {
@@ -36,10 +33,6 @@ export class CommandManagerController {
 
     if (msg[0] === '/') {
       const userCommand = msg.slice(1);
-      const partyManager = new PartyManager(userCommand);
-      const partyUserManager = new PartyUserManager(userCommand, sender);
-      const partyHelp = new PartyHelp();
-      // const customUserCommand = new CustomUserCommand(userCommand, sender);
       const command = userCommand.split(' ')[0];
 
       for (let i=0; i<commandList.length; i++) {
@@ -47,17 +40,17 @@ export class CommandManagerController {
         if (type.command.includes(command)) {
           switch (type.name) {
             case FIND_PARTY:
-              return partyManager.findParty();
+              return this.partyManager.findParty();
             case CREATE_PARTY:
-              return partyManager.createParty();
+              return this.partyManager.createParty(chatBotInput);
             case DELETE_PARTY:
-              return partyManager.deleteParty();
+              return this.partyManager.deleteParty(chatBotInput);
             case ENTER_PARTY:
-              return partyUserManager.enterParty();
+              return this.partyUserManager.enterParty(chatBotInput);
             case EXIT_PARTY:
-              return partyUserManager.exitParty();
+              return this.partyUserManager.exitParty(chatBotInput);
             case HELP_PARTY:
-              return partyHelp.printHelp();
+              return this.partyHelp.printHelp();
             case USER_COMMNAD:
               return this.customUserCommand.createUserCommand(chatBotInput);
           }
@@ -123,7 +116,7 @@ export const translateParty2String = (message = '') => {
   let str = '';
 
   if (keys.length === 0) {
-    str = '[파티없음]\n';
+    str = '[파티없음]';
   } else {
     keys.map(key => {
       const date = party[key].time;

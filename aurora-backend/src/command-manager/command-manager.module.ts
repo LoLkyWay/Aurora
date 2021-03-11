@@ -3,11 +3,19 @@ import { CommandManagerController } from './command-manager.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Commands } from '../user-custom-command/entities/commands.entitiy';
 import { Keyword } from '../user-custom-command/entities/keyword.entitiy';
-import { CustomUserCommand } from './commands/custom-user-command.service';
+import { CustomUserCommand } from './services/custom-user-command.service';
+import { PartyManager } from './services/party-manager.service';
+import { PartyUserManager } from './services/party-user-manager.service';
+import { PartyHelp } from './services/party-help.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Commands, Keyword])],
   controllers: [CommandManagerController],
-  providers: [CustomUserCommand],
+  providers: [
+    PartyManager,
+    PartyUserManager,
+    PartyHelp,
+    CustomUserCommand
+  ],
 })
 export class CommandManagerModule {}

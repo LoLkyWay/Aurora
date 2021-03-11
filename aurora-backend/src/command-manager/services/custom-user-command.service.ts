@@ -15,7 +15,9 @@ export class CustomUserCommand {
     private readonly keyword: Repository<Keyword>,
   ) {}
 
-  async createUserCommand(chatBotInput :ChatBotInput): Promise<ChatBotOutput> {
+  async createUserCommand(
+    chatBotInput :ChatBotInput
+  ): Promise<ChatBotOutput> {
     const { sender: userName } = chatBotInput;
     const [_, arguement] = trimInput(chatBotInput);
     const [keyword, outputText] = arguement.split('::');
