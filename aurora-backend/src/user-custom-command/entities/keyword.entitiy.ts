@@ -14,7 +14,7 @@ export class Keyword extends CoreEntity {
   // @Column({ array: true })
   @OneToMany(
     type => Commands,
-    commands => commands.id,
+    commands => commands.keyword,
     { onDelete: 'CASCADE' }
   )
   commands: Commands[];

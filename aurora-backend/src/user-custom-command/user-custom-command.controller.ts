@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ChatBotInput } from '../common/dtos/chatBot.dto';
+import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
 
@@ -19,13 +19,52 @@ export class UserCustomCommandController {
   ) {}
 
   @Post()
-  userCustomCommand(@Body() {
+  async userCustomCommand(@Body() {
     room,
     msg,
     sender,
     isGroupChat,
     image,
-  }: ChatBotInput): string {
-    return '';
+  }: ChatBotInput): Promise<ChatBotOutput> {
+
+    if (msg.length > 20) {
+      return {
+        success: false,
+        message: '문자가 너무 깁니다.',
+      }
+    }
+    try {
+      const outputText = await this.keyword.findOne({
+        where: {
+          keyword: msg
+        },
+        relations: ['commands']
+      });
+
+      if (!outputText) {
+        return {
+          success: false,
+          message: '등록된 키워드가 없습니다.'
+        }
+      }
+
+      const len = outputText.commands.length;
+      if (len === 0) {
+        return {
+          success: false,
+          message: '등록된 단어가 없습니다.'
+        }
+      }
+      const ramdomValue = Math.floor(Math.random() * (len))
+      return {
+        success: true,
+        message: outputText.commands[ramdomValue].outputText,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error,
+      }
+    }
   }
 }
