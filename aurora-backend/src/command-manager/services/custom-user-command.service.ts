@@ -104,18 +104,21 @@ export class CustomUserCommand {
         where: { keyword },
         relations: ['commands'],
       });
-      const returnText = outputText.commands.map(({
+
+      let text = '-- "${keyword}" 학습 내역 --\n';
+      text += outputText.commands.map(({
         id,
         userName,
         createdAt,
         outputText,
       }, index) => {
         const date = `${createdAt.getFullYear()}.${createdAt.getMonth() + 1}.${createdAt.getDate()}. ${createdAt.getHours()}:${createdAt.getMinutes()}`;
-        return `-- "${keyword}" 학습 내역 --\n[ID: ${index}, author: ${userName} (${date})]\n${outputText}`
-      });
+        return `[ID: ${index}, author: ${userName} (${date})]\n${outputText}`
+      }).join('\n');
+
       return {
         success: true,
-        message: returnText.join('\n'),
+        message: text,
       }
     } catch (error) {
       return {

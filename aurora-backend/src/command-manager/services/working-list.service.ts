@@ -89,9 +89,10 @@ export class WorkingListManager {
     }
 
     try {
-      const working = await this.working.findOne(idx);
+      const working = await this.working.find();
+      const index = +idx - 1;
 
-      if (!working) {
+      if (!working[index]) {
         return {
           success: false,
           message: '존재하지 않는 Index 입니다.',
@@ -106,13 +107,13 @@ export class WorkingListManager {
       }
 
       await this.working.save([{
-        id: working.id,
+        id: working[index].id,
         status: dbStatus,
       }]);
 
       return {
         success: true,
-        message: `${working.userName}-${working.champion} => ${dbStatus} 상태 변경 완료`,
+        message: `${working[index].userName}-${working[index].champion} => ${dbStatus} 상태 변경 완료`,
       }
     } catch (error) {
       return {
@@ -136,20 +137,21 @@ export class WorkingListManager {
     }
 
     try {
-      const working = await this.working.findOne(idx);
+      const working = await this.working.find();
+      const index = +idx - 1;
 
-      if (!working) {
+      if (!working[index]) {
         return {
           success: false,
           message: '존재하지 않는 Index 입니다.',
         }
       }
 
-      await this.working.softRemove(working);
+      await this.working.softRemove(working[index]);
 
       return {
         success: true,
-        message: `${working.userName}-${working.champion} 삭제 완료`,
+        message: `${working[index].userName}-${working[index].champion} 삭제 완료`,
       }
     } catch (error) {
       return {
