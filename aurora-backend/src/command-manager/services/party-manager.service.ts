@@ -127,7 +127,7 @@ export class PartyManager {
         delete party[room][partyName];
         return {
           success: true,
-          message: translateParty2String(room, `${partyName} 파티가 삭제되었습니다!`),
+          message: `${partyName} 파티가 삭제되었습니다!`,
         }
       }
     }
