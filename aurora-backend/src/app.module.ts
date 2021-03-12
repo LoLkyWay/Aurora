@@ -8,13 +8,14 @@ import { UserCustomCommandModule } from './user-custom-command/user-custom-comma
 
 import { Keyword } from './user-custom-command/entities/keyword.entitiy';
 import { Commands } from './user-custom-command/entities/commands.entitiy';
+import { Working } from './user-custom-command/entities/working.entity';
 
 /*
   @author AJu (zoz0312)
 */
 @Module({
   imports: [
-    ConfigModule.forRoot({
+  ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
       ignoreEnvFile: process.env.NODE_ENV === 'production',
@@ -38,7 +39,11 @@ import { Commands } from './user-custom-command/entities/commands.entitiy';
       password: process.env.DB_PASSSWORD,
       synchronize: true,
       logging: process.env.NODE_ENV === 'dev',
-      entities: [Commands, Keyword],
+      entities: [
+        Commands,
+        Keyword,
+        Working,
+      ],
     }),
     ScheduleModule.forRoot()
   ],

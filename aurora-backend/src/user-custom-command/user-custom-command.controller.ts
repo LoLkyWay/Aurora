@@ -1,9 +1,12 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HELP_PARTY } from 'src/constants';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
+import { keywordList } from './services/keywords/index';
+import { WorkingList } from './services/working-list.service';
 
 /*
   @author AJu (zoz0312)
@@ -16,6 +19,7 @@ export class UserCustomCommandController {
     private readonly commands: Repository<Commands>,
     @InjectRepository(Keyword)
     private readonly keyword: Repository<Keyword>,
+    private workingList: WorkingList,
   ) {}
 
   @Post()
@@ -27,6 +31,18 @@ export class UserCustomCommandController {
     image,
   }: ChatBotInput): Promise<ChatBotOutput> {
 
+    /* 특정 키워드 필터링 */
+    for (let i=0; i<keywordList.length; i++) {
+      const type = keywordList[i];
+      if (type.command.includes(msg)) {
+        switch (type.name) {
+          case HELP_PARTY:
+            return this.workingList.findWorlingList();
+        }
+      }
+    }
+
+    /* 특정 키워드 제외 필터링 */
     if (msg.length > 20) {
       return {
         success: false,

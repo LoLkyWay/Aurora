@@ -3,6 +3,8 @@ import { UserCustomCommandController } from './user-custom-command.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
+import { WorkingList } from './services/working-list.service';
+import { Working } from './entities/working.entity';
 
 /*
   @author AJu (zoz0312)
@@ -12,7 +14,11 @@ import { Keyword } from './entities/keyword.entitiy';
   imports: [TypeOrmModule.forFeature([
     Commands,
     Keyword,
+    Working,
   ])],
-  controllers: [UserCustomCommandController]
+  controllers: [UserCustomCommandController],
+  providers: [
+    WorkingList,
+  ],
 })
 export class UserCustomCommandModule {}
