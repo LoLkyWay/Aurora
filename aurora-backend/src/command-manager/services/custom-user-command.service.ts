@@ -110,8 +110,8 @@ export class CustomUserCommand {
         createdAt,
         outputText,
       }, index) => {
-        const date = `${createdAt.getFullYear()}/${createdAt.getMonth() + 1}/${createdAt.getDate()} ${createdAt.getHours()}:${createdAt.getMinutes()}`;
-        return `-- "${keyword}" 학습 내역 --\n[ID: ${index}, author: ${userName}, date: ${date}]\n${outputText}`
+        const date = `${createdAt.getFullYear()}.${createdAt.getMonth() + 1}.${createdAt.getDate()}. ${createdAt.getHours()}:${createdAt.getMinutes()}`;
+        return `-- "${keyword}" 학습 내역 --\n[ID: ${index}, author: ${userName} (${date})]\n${outputText}`
       });
       return {
         success: true,
