@@ -15,11 +15,13 @@ export class Commands extends CoreEntity {
   // @Column()
   @ManyToOne(
     type => Keyword,
-    { onDelete: 'CASCADE' },
+    { onDelete: 'CASCADE' }
   )
   keyword: Keyword;
 
-  @RelationId((command: Commands) => command.keyword)
+  @RelationId(
+    (command: Commands) => command.keyword
+  )
   keywordId: number;
 
   @Column()

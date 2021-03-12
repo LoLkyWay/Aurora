@@ -109,9 +109,9 @@ export class CustomUserCommand {
         userName,
         createdAt,
         outputText,
-      }) => {
+      }, index) => {
         const date = `${createdAt.getFullYear()}/${createdAt.getMonth() + 1}/${createdAt.getDate()} ${createdAt.getHours()}:${createdAt.getMinutes()}`;
-        return `-- "${keyword}" 학습 내역 --\n[ID: ${id}, author: ${userName}, date: ${date}]\n${outputText}`
+        return `-- "${keyword}" 학습 내역 --\n[ID: ${index}, author: ${userName}, date: ${date}]\n${outputText}`
       });
       return {
         success: true,
@@ -129,8 +129,60 @@ export class CustomUserCommand {
   async deleteUserCommand(
     chatBotInput :ChatBotInput
   ): Promise<ChatBotOutput> {
-    try {
+    const { sender: userName } = chatBotInput;
+    const [_, arguement] = trimInput(chatBotInput);
+    const [keyword, arg] = arguement.split('::');
 
+    if (!keyword) {
+      return {
+        success: false,
+        message: '키워드가 존재하지 않습니다!',
+      }
+    }
+
+    const idx = +arg;
+    if (idx < 0 && arg !== 'all') {
+      return {
+        success: false,
+        message: 'index 범위가 벗어납니다',
+      }
+    }
+
+    try {
+      if (arg === 'all') {
+        // 전체삭제
+        const key = await this.keyword.findOne({
+          where: { keyword },
+          relations: ['commands'],
+        });
+
+        await this.keyword.softRemove(key);
+
+        return {
+          success: true,
+          message: `"${keyword}" 키워드 전체 삭제 완료`,
+        }
+      } else {
+        // 부분삭제
+        const key = await this.keyword.findOne({
+          where: { keyword },
+          relations: ['commands'],
+        });
+
+        if (!key.commands[idx]) {
+          return {
+            success: false,
+            message: '삭제하려는 ID가 없습니다.',
+          }
+        }
+
+        await this.commands.softDelete(key.commands[idx].id);
+
+        return {
+          success: true,
+          message: `"${key.commands[idx].outputText}" 답변 삭제 완료`,
+        }
+      }
     } catch (error) {
       return {
         success: false,

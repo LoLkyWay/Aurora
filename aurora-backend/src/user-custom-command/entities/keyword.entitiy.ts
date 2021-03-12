@@ -15,7 +15,10 @@ export class Keyword extends CoreEntity {
   @OneToMany(
     type => Commands,
     commands => commands.keyword,
-    { onDelete: 'CASCADE' }
+    {
+      cascade: true,
+      onDelete: 'CASCADE',
+    }
   )
   commands: Commands[];
 }

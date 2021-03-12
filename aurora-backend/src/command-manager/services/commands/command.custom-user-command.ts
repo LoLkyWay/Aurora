@@ -21,7 +21,7 @@ export const commandCustomUserCommand: commandDTO[] = [
   {
     name: DELETE_USER_COMMAND,
     command: ['학습제거', '학습삭제'],
-    desc: '==미지원기능==',
-    argumentDesc: ['[일부삭제](학습키워드)::(ID) 또는 [전체삭제](학습키워드)::(all)'],
+    desc: '오로라 학습 제거',
+    argumentDesc: ['[일부삭제](학습키워드)::(ID) 또는 [전체삭제](학습키워드)::all'],
   }
 ];
