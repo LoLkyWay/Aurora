@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HELP_PARTY } from 'src/constants';
+import { HELP_PARTY, SHOW_WORKING_LIST } from 'src/constants';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
@@ -36,7 +36,7 @@ export class UserCustomCommandController {
       const type = keywordList[i];
       if (type.command.includes(msg)) {
         switch (type.name) {
-          case HELP_PARTY:
+          case SHOW_WORKING_LIST:
             return this.workingList.findWorlingList();
         }
       }

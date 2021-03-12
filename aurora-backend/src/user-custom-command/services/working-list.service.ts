@@ -1,7 +1,7 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { ChatBotOutput } from "src/common/dtos/chatBot.dto";
 import { Repository } from "typeorm";
-import { Working } from '../entities/working.entity';
+import { Status, Working } from '../entities/working.entity';
 
 
 /*
@@ -16,9 +16,39 @@ export class WorkingList {
   }
 
   async findWorlingList(): Promise<ChatBotOutput> {
-    const list = await this.working.find();
-    return {
-      success: true,
+    try {
+      const list = await this.working.find();
+
+      if (list.length === 0) {
+        return {
+          success: false,
+          message: '[등록된 작업목록이 없습니다]',
+        }
+      }
+
+      let message = '[룽지님 작업 목록]\n\n';
+      list.map(({ userName, champion, status }, index) => {
+        message += `${index + 1}. `;
+        message += `${userName} - ${champion}`;
+        if (status === Status.Todo) {
+        } else if (status === Status.Working) {
+          message += ' 👩‍🏭';
+        } else if (status === Status.Done) {
+          message += ' 🔥';
+        }
+        message += '\n';
+      });
+
+      return {
+        success: true,
+        message,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: 'DB 조회 오류',
+        error,
+      }
     }
   }
 }
