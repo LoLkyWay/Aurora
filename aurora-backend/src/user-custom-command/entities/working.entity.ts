@@ -3,9 +3,9 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "t
 import { IsEnum } from 'class-validator';
 
 export enum Status {
-  Todo = 'Todo',
-  Working = 'Working',
-  Done = 'Done',
+  Todo = 'TODO',
+  Working = 'WORKING',
+  Done = 'DONE',
 }
 
 /*
