@@ -42,6 +42,8 @@ export class CommandManagerController {
       const userCommand = msg.slice(1);
       const command = userCommand.split(' ')[0];
 
+      console.log('command', command);
+
       for (let i=0; i<commandList.length; i++) {
         const type = commandList[i];
         if (type.command.includes(command)) {
@@ -66,11 +68,11 @@ export class CommandManagerController {
               return this.customUserCommand.deleteUserCommand(chatBotInput);
 
             case CREATE_WORKING:
-              return this.workingManager.createWorking();
+              return this.workingManager.createWorking(chatBotInput);
             case UPDATE_WORKING:
-              return this.workingManager.updateWorking();
+              return this.workingManager.updateWorking(chatBotInput);
             case DELETE_WORKING:
-              return this.workingManager.deleteWorking();
+              return this.workingManager.deleteWorking(chatBotInput);
           }
         }
       }
