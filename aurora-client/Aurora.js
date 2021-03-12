@@ -5,7 +5,7 @@ const scriptName = "Aurora.js";
  * (String) mgs // 메시지
  * (string) sender // 전송자
  * (boolean) isGroupChat // 단체 채팅방 여부
- * (void) replier.reply(message) // 응답욕 객체
+ * (void) replier.reply(message) // 응답용 객체
  * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환
  * (string) imageDB.getProfileBase64() // 전송자 프로필 이미지를 Base64로 인코딩하여 반환
  * (string) packageName // 메시지를 받은 메신저의 패키지명
@@ -39,11 +39,10 @@ function response (room, msg, sender, isGroupChat, replier, imageDB, packageName
         .post()
         .wholeText();
 
-    if (res.success || flag) {
-        const json = JSON.parse(res);
+    const json = JSON.parse(res);
+    if (json.success || flag) {
         replier.reply(json.message);
     }
-
 }
 
 /**
