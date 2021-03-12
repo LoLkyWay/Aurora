@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
-import { Working } from '../../user-custom-command/entities/working.entity';
+import { Working, Status } from '../../user-custom-command/entities/working.entity';
 
 /*
   @author AJu (zoz0312)
@@ -88,11 +88,39 @@ export class WorkingListManager {
       }
     }
 
-    return {
-      success: true,
-      message: '',
-    }
+    try {
+      const working = await this.working.findOne(idx);
 
+      if (!working) {
+        return {
+          success: false,
+          message: '존재하지 않는 Index 입니다.',
+        }
+      }
+
+      let dbStatus = Status.Todo;
+      if (state === 1) {
+        dbStatus = Status.Working;
+      } else if (state === 2) {
+        dbStatus = Status.Done;
+      }
+
+      await this.working.save([{
+        id: working.id,
+        status: dbStatus,
+      }]);
+
+      return {
+        success: true,
+        message: `${working.userName}-${working.champion} => ${dbStatus} 상태 변경 완료`,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: 'DB 업데이트 오류',
+        error,
+      }
+    }
   }
 
   async deleteWorking(

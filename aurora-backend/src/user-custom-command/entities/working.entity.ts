@@ -2,7 +2,7 @@ import { CoreEntity } from "src/common/entities/core.entities";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { IsEnum } from 'class-validator';
 
-enum Status {
+export enum Status {
   Todo = 'Todo',
   Working = 'Working',
   Done = 'Done',
