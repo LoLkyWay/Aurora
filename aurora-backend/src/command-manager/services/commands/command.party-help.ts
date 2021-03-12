@@ -9,7 +9,7 @@ import {
 export const commandPartyHelp: commandDTO[] = [
   {
     name: HELP_PARTY,
-    command: ['도', '도움', '도움말', '사용', '사용법'],
+    command: ['도', '도움말', '사용법'],
     desc: '도움말',
   },
 ];

@@ -8,7 +8,7 @@ import { DELETE_USER_COMMAND } from '../../../constants';
 export const commandCustomUserCommand: commandDTO[] = [
   {
     name: CREATE_USER_COMMNAD,
-    command: ['학습하기', '학습', '가르치기', '가르'],
+    command: ['학습하기', '가르치기',],
     desc: '오로라 학습하기',
     argumentDesc: ['(학습키워드)::(내용)'],
   },

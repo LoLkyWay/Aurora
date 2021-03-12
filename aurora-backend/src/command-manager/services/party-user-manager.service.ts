@@ -38,10 +38,20 @@ export class PartyUserManager {
           message: `이미 참여한 파티입니다!`,
         }
       }
+
       let maximum = 5;
-      if (partyName.includes('내전')) {
+      if (
+        partyName.includes('내전')
+        || partyName.includes('스크림')
+      ) {
         maximum = 10;
+      } else if (
+        partyName.includes('롤토체스')
+        || partyName.includes('롤체')
+      ) {
+        maximum = 8;
       }
+
       if (party[room][partyName].user.length >= maximum) {
         return {
           success: false,

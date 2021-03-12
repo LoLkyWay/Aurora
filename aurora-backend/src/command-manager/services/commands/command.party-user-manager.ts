@@ -16,7 +16,7 @@ export const commandPartyUserManager: commandDTO[] = [
   },
   {
     name: EXIT_PARTY,
-    command: ['파티탈', '파티탈퇴', '파티떠', '파티떠나', '파티떠나기', '파탈', '파떠'],
+    command: ['파티탈', '파티탈퇴', '파탈'],
     desc: '파티 탈퇴',
     argumentDesc: ['파티이름'],
   }
