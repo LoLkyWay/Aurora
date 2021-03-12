@@ -15,7 +15,10 @@ export class Commands extends CoreEntity {
   // @Column()
   @ManyToOne(
     type => Keyword,
-    { onDelete: 'CASCADE' }
+    {
+      cascade: true,
+      onDelete: 'CASCADE'
+    }
   )
   keyword: Keyword;
 
