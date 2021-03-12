@@ -16,6 +16,7 @@ export class WorkingList {
   }
 
   async findWorlingList(): Promise<ChatBotOutput> {
+    const list = await this.working.find();
     return {
       success: true,
     }

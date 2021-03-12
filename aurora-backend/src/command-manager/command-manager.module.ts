@@ -7,18 +7,25 @@ import { CustomUserCommand } from './services/custom-user-command.service';
 import { PartyManager } from './services/party-manager.service';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { PartyHelp } from './services/party-help.service';
+import { Working } from '../user-custom-command/entities/working.entity';
+import { WorkingListManager } from './services/working-list.service';
 
 /*
   @author AJu (zoz0312)
 */
 @Module({
-  imports: [TypeOrmModule.forFeature([Commands, Keyword])],
+  imports: [TypeOrmModule.forFeature([
+  Commands,
+    Keyword,
+    Working,
+  ])],
   controllers: [CommandManagerController],
   providers: [
     PartyManager,
     PartyUserManager,
     PartyHelp,
-    CustomUserCommand
+    CustomUserCommand,
+    WorkingListManager,
   ],
 })
 export class CommandManagerModule {}

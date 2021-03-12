@@ -2,13 +2,14 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST } from 'src/constants';
-import { FIND_PARTY, DELETE_USER_COMMAND } from '../constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING } from 'src/constants';
+import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING } from '../constants';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './services/commands/index';
 import { PartyHelp } from './services/party-help.service';
 import { CustomUserCommand } from './services/custom-user-command.service';
+import { WorkingListManager } from './services/working-list.service';
 
 /*
   @author AJu (zoz0312)
@@ -22,6 +23,7 @@ export class CommandManagerController {
     private partyManager: PartyManager,
     private partyUserManager: PartyUserManager,
     private partyHelp: PartyHelp,
+    private workingManager: WorkingListManager,
   ) {}
 
   @Post()
@@ -62,6 +64,13 @@ export class CommandManagerController {
               return this.customUserCommand.findUserCommand(chatBotInput);
             case DELETE_USER_COMMAND:
               return this.customUserCommand.deleteUserCommand(chatBotInput);
+
+            case CREATE_WORKING:
+              return this.workingManager.createWorking();
+            case UPDATE_WORKING:
+              return this.workingManager.updateWorking();
+            case DELETE_WORKING:
+              return this.workingManager.deleteWorking();
           }
         }
       }

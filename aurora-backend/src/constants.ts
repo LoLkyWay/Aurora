@@ -16,4 +16,7 @@ export const SHOW_USER_COMMAND_LIST = 'showUserCommandList';
 export const DELETE_USER_COMMAND = 'deleteUserCommandList';
 
 
-export const SHOW_WORKING_LIST ='showWorkingList';
+export const SHOW_WORKING_LIST = 'showWorkingList';
+export const CREATE_WORKING = 'createWorking';
+export const UPDATE_WORKING = 'updateWorking';
+export const DELETE_WORKING = 'deleteWorking';
