@@ -8,6 +8,41 @@ export class PartyHelp {
   constructor() {}
 
   printHelp() {
+    let message = '';
+    message += '🌌 오로라 명령어 모음\n'
+    message += '\n';
+    message += '■ 파티매니저 명령어\n'
+    message += '\n';
+    message += '/도움말\n'
+    message += '/사용법\n'
+    message += '/파티리스트\n'
+    message += '/파티참여 {파티이름}\n'
+    message += '/파티삭제 {파티이름}\n'
+    message += '/파티제거 {파티이름}\n'
+    message += '/파티탈퇴 {파티이름}\n'
+    message += '/파티떠나기 {파티이름}\n'
+    message += '/파티생성 {파티이름} {시간 (1500, 15:00, 15시 00분)}\n'
+    message += '\n';
+    message += '예시)\n'
+    message += '/파티생성 내전 2200\n'
+    message += '\n';
+    message += '■ 오로라 학습하기 명령어\n'
+    message += '\n';
+    message += '/학습하기 {(학습키워드)::(내용)}\n'
+    message += '/가르치기 {(학습키워드)::(내용)}\n'
+    message += '/학습내역 {학습키워드}\n'
+    message += '/가르치기내역 {학습키워드}\n'
+    message += '\n';
+    message += '예시)\n'
+    message += '/학습하기 안녕::안녕하세요\n'
+
+    return {
+      success: true,
+      message
+    }
+  }
+
+  printHelpDetail () {
     let commandDesc = '';
     commandList.map(({
       command,

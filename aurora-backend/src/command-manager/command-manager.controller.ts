@@ -2,7 +2,7 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING } from 'src/constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL } from 'src/constants';
 import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING } from '../constants';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
@@ -42,8 +42,6 @@ export class CommandManagerController {
       const userCommand = msg.slice(1);
       const command = userCommand.split(' ')[0];
 
-      console.log('command', command);
-
       for (let i=0; i<commandList.length; i++) {
         const type = commandList[i];
         if (type.command.includes(command)) {
@@ -60,6 +58,8 @@ export class CommandManagerController {
               return this.partyUserManager.exitParty(chatBotInput);
             case HELP_PARTY:
               return this.partyHelp.printHelp();
+            case HELP_PARTY_DETAIL:
+              return this.partyHelp.printHelpDetail();
             case CREATE_USER_COMMNAD:
               return this.customUserCommand.createUserCommand(chatBotInput);
             case SHOW_USER_COMMAND_LIST:

@@ -10,6 +10,7 @@ export const ENTER_PARTY = 'enterParty';
 export const EXIT_PARTY = 'exitParty';
 
 export const HELP_PARTY = 'helpParty';
+export const HELP_PARTY_DETAIL = 'helpPartyDetail';
 
 export const CREATE_USER_COMMNAD = 'createUserCommand';
 export const SHOW_USER_COMMAND_LIST = 'showUserCommandList';

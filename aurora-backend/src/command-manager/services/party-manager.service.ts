@@ -55,7 +55,7 @@ export class PartyManager {
       if (parties[i] === partyName) {
         return {
           success: false,
-          message: translateParty2String(room, '이미 존재하는 파티입니다.'),
+          message: `${partyName} 이미 존재하는 파티입니다.`,
         }
       }
     }
@@ -101,7 +101,7 @@ export class PartyManager {
 
     return {
       success: true,
-      message: translateParty2String(room, '파티가 생성되었습니다!'),
+      message: `${partyName} 파티가 생성되었습니다!`,
     }
   }
 
