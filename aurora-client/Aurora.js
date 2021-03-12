@@ -1,17 +1,18 @@
 const scriptName = "Aurora.js";
 
 /**
- * (string) room
- * (string) sender
- * (boolean) isGroupChat
- * (void) replier.reply(message)
+ * (string) room // 메시지를 받은 방 이름
+ * (String) mgs // 메시지
+ * (string) sender // 전송자
+ * (boolean) isGroupChat // 단체 채팅방 여부
+ * (void) replier.reply(message) // 응답욕 객체
  * (boolean) replier.reply(room, message, hideErrorToast = false) // 전송 성공시 true, 실패시 false 반환
- * (string) imageDB.getProfileBase64()
- * (string) packageName
+ * (string) imageDB.getProfileBase64() // 전송자 프로필 이미지를 Base64로 인코딩하여 반환
+ * (string) packageName // 메시지를 받은 메신저의 패키지명
  */
 function response (room, msg, sender, isGroupChat, replier, imageDB, packageName) {
 
-    const resourceUrl = "http://zoz0312.com:8822";
+    const resourceUrl = "http://zoz0312.com:8822"; // test port: 8000
     const myRoom = [
         '롤키웨이(LoLky Way)',
         '오로라개발방'
@@ -36,10 +37,11 @@ function response (room, msg, sender, isGroupChat, replier, imageDB, packageName
         .ignoreHttpErrors(true)
         .ignoreContentType(true)
         .post()
-        .outputSettings().prettyPrint(false);
+        .wholeText();
 
     if (res.success || flag) {
-        replier.reply(res.message);
+        const json = JSON.parse(res);
+        replier.reply(json.message);
     }
 
 }
