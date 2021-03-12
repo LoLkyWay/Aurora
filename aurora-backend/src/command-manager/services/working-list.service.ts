@@ -127,10 +127,36 @@ export class WorkingListManager {
     chatBotInput :ChatBotInput
   ): Promise<ChatBotOutput> {
     const [_, idx] = trimInput(chatBotInput);
-    return {
-      success: true,
-      message: '',
+
+    if (!idx) {
+      return {
+        success: false,
+        message: 'Index를 입력해주세요!',
+      }
     }
 
+    try {
+      const working = await this.working.findOne(idx);
+
+      if (!working) {
+        return {
+          success: false,
+          message: '존재하지 않는 Index 입니다.',
+        }
+      }
+
+      await this.working.softRemove(working);
+
+      return {
+        success: true,
+        message: `${working.userName}-${working.champion} 삭제 완료`,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: 'DB 삭제 오류',
+        error,
+      }
+    }
   }
 }
