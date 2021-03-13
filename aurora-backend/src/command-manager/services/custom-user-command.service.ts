@@ -54,7 +54,6 @@ export class CustomUserCommand {
         );
       }
 
-      console.log('dbKeyword', dbKeyword)
       const commands = await this.commands.findOne({
         where: {
           outputText,
