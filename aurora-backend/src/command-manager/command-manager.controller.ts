@@ -151,7 +151,7 @@ export const translateParty2String = (room = '', message = '') => {
   }
 
   if (message) {
-    str += `\n\n${message}`;
+    str += `\n${message}`;
   }
   return str;
 }
