@@ -105,7 +105,7 @@ export class CustomUserCommand {
         relations: ['commands'],
       });
 
-      let text = '-- "${keyword}" 학습 내역 --\n';
+      let text = `-- "${keyword}" 학습 내역 --\n`;
       text += outputText.commands.map(({
         id,
         userName,

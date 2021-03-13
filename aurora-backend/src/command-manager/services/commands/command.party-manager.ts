@@ -11,12 +11,12 @@ import {
 export const commandPartyManager: commandDTO[] = [
   {
     name: FIND_PARTY,
-    command: ['파', '파티', '파티리스트'],
+    command: ['파', '파티', '파티리', '파티목록', '파티리스트'],
     desc: '파티 조회',
   },
   {
     name: CREATE_PARTY,
-    command: ['파티생성',],
+    command: ['파티생성', '파생'],
     desc: '파티 생성',
     argumentDesc: ['파티이름', '시간 (1500, 15:00, 15시 00분)'],
   },

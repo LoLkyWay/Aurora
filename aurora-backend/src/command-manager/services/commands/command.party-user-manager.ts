@@ -10,7 +10,7 @@ import {
 export const commandPartyUserManager: commandDTO[] = [
   {
     name: ENTER_PARTY,
-    command: ['파티참', '파티참여', '파참'],
+    command: ['파티참', '파티참여', '파참', '파티참가'],
     desc: '파티 참여',
     argumentDesc: ['파티이름'],
   },
