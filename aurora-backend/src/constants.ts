@@ -21,3 +21,6 @@ export const SHOW_WORKING_LIST = 'showWorkingList';
 export const CREATE_WORKING = 'createWorking';
 export const UPDATE_WORKING = 'updateWorking';
 export const DELETE_WORKING = 'deleteWorking';
+
+export const RANDOM_LOTTO = 'randomLotto';
+export const RANDOM_PENTION_LOTTO = 'randomPentionLotto';

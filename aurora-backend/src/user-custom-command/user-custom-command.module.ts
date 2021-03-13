@@ -5,6 +5,7 @@ import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
 import { WorkingList } from './services/working-list.service';
 import { Working } from './entities/working.entity';
+import { LottoDraw } from './services/lotto-draw.service';
 
 /*
   @author AJu (zoz0312)
@@ -19,6 +20,7 @@ import { Working } from './entities/working.entity';
   controllers: [UserCustomCommandController],
   providers: [
     WorkingList,
+    LottoDraw,
   ],
 })
 export class UserCustomCommandModule {}

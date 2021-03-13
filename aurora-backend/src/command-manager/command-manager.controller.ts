@@ -3,7 +3,7 @@ import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL } from 'src/constants';
-import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING } from '../constants';
+import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, RANDOM_LOTTO } from '../constants';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
 import { commandList } from './services/commands/index';

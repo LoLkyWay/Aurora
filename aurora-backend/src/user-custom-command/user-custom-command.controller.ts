@@ -1,12 +1,14 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HELP_PARTY, SHOW_WORKING_LIST } from 'src/constants';
+import { HELP_PARTY, RANDOM_PENTION_LOTTO, SHOW_WORKING_LIST } from 'src/constants';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
 import { Keyword } from './entities/keyword.entitiy';
 import { keywordList } from './services/keywords/index';
 import { WorkingList } from './services/working-list.service';
+import { LottoDraw } from './services/lotto-draw.service';
+import { RANDOM_LOTTO } from '../constants';
 
 /*
   @author AJu (zoz0312)
@@ -20,6 +22,7 @@ export class UserCustomCommandController {
     @InjectRepository(Keyword)
     private readonly keyword: Repository<Keyword>,
     private workingList: WorkingList,
+    private lottoDraw: LottoDraw,
   ) {}
 
   @Post()
@@ -38,6 +41,10 @@ export class UserCustomCommandController {
         switch (type.name) {
           case SHOW_WORKING_LIST:
             return this.workingList.findWorlingList();
+          case RANDOM_LOTTO:
+            return this.lottoDraw.randomLottoDraw();
+          case RANDOM_PENTION_LOTTO:
+            return this.lottoDraw.randomPensionLotto();
         }
       }
     }

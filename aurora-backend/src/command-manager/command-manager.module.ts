@@ -15,7 +15,7 @@ import { WorkingListManager } from './services/working-list.service';
 */
 @Module({
   imports: [TypeOrmModule.forFeature([
-  Commands,
+    Commands,
     Keyword,
     Working,
   ])],
