@@ -3,6 +3,7 @@
   공통 변수 선언
 */
 export const FIND_PARTY = 'findParty';
+export const PARTY_PRINT_JSON = 'partyPrintJson';
 export const CREATE_PARTY = 'createParty';
 export const DELETE_PARTY = 'deleteParty';
 

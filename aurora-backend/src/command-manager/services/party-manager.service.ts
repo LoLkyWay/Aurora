@@ -1,8 +1,8 @@
 import { party, partyStructure } from '../../cache-party';
 import { deepCopy } from 'deep-copy-ts';
 import { translateParty2String } from '../command-manager.controller';
-import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
+import { ChatBotInput, ChatBotOutput } from 'src/common/dtos/chatBot.dto';
 
 /*
   @author AJu (zoz0312)
@@ -20,6 +20,15 @@ export class PartyManager {
       success: true,
       message: translateParty2String(room, '지금까지의 파티 목록입니다!'),
     };
+  }
+
+  printPartyJson (): ChatBotOutput {
+    const partyDeepClone = deepCopy(party);
+    partyDeepClone['curDate'] = new Date();
+    return {
+      success: true,
+      message: JSON.stringify(partyDeepClone),
+    }
   }
 
   createParty(

@@ -2,6 +2,7 @@ import {
   FIND_PARTY,
   CREATE_PARTY,
   DELETE_PARTY,
+  PARTY_PRINT_JSON,
 } from '../../../constants';
 
 /*
@@ -13,6 +14,11 @@ export const commandPartyManager: commandDTO[] = [
     name: FIND_PARTY,
     command: ['파', '파티', '파티리', '파티목록', '파티리스트'],
     desc: '파티 조회',
+  },
+  {
+    name: PARTY_PRINT_JSON,
+    command: ['printJson'],
+    desc: 'party print Json',
   },
   {
     name: CREATE_PARTY,
