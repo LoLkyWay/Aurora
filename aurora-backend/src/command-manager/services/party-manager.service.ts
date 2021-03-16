@@ -18,7 +18,10 @@ export class PartyManager {
   ): ChatBotOutput {
     return {
       success: true,
-      message: translateParty2String(room, '지금까지의 파티 목록입니다!'),
+      message: translateParty2String({
+        room,
+        message: '지금까지의 파티 목록입니다!',
+      }),
     };
   }
 

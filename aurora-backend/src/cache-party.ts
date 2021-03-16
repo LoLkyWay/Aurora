@@ -23,7 +23,7 @@ import { deepCopy } from 'deep-copy-ts';
   @author AJu (zoz0312)
   메모지에이션을 하는 파티들의 묶음
 */
-interface partyStructureDTO {
+export interface partyStructureDTO {
   time: Date;
   user: string[];
 };

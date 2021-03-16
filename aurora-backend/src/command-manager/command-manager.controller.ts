@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
-import { party } from '../cache-party';
+import { party, partyStructureDTO } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
 import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND } from 'src/constants';
 import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, RANDOM_LOTTO } from '../constants';
@@ -118,7 +118,34 @@ export class CommandManagerController {
   인자:
    - message: 파티 목록의 맨 마지막에 붙혀줄 메시지
 */
-export const translateParty2String = (room = '', message = '') => {
+export const translateParty2String = ({
+  room = '',
+  message = '',
+  partyName = '',
+}) => {
+  const partyPart = (
+    partyName: string,
+    partyObject: partyStructureDTO
+  ) => {
+    let str = '';
+    const date = partyObject.time;
+
+    str += `${partyName} - ${date.getHours()}시`;
+    if (date.getMinutes() > 0) {
+      str += ` ${date.getMinutes()}분`;
+    }
+    str += '\n';
+
+    if (partyObject.user.length === 0) {
+      str += `--- 없음 ---\n`;
+    } else {
+      partyObject.user.map((user, index) => {
+        str += `${index+1}. ${user}\n`;
+      });
+    }
+    return str += '\n'
+  }
+
   if (room === '') {
     return '잘못된 방입니다.';
   }
@@ -134,24 +161,13 @@ export const translateParty2String = (room = '', message = '') => {
   if (keys.length === 0) {
     str = '[파티없음]';
   } else {
-    keys.map(key => {
-      const date = myRoom[key].time;
-
-      str += `${key} - ${date.getHours()}시`;
-      if (date.getMinutes() > 0) {
-        str += ` ${date.getMinutes()}분`;
-      }
-      str += '\n';
-
-      if (myRoom[key].user.length === 0) {
-        str += `--- 없음 ---\n`;
-      } else {
-        myRoom[key].user.map((user, index) => {
-          str += `${index+1}. ${user}\n`;
-        });
-      }
-      str += '\n'
-    });
+    if (partyName) {
+      str += partyPart(partyName, myRoom[partyName]);
+    } else {
+      keys.map((item, index) => {
+        str += partyPart(keys[index], myRoom[item]);
+      });
+    }
   }
 
   if (message) {
@@ -159,3 +175,4 @@ export const translateParty2String = (room = '', message = '') => {
   }
   return str;
 }
+

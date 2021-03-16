@@ -1,6 +1,7 @@
 import { party } from '../../cache-party';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
+import { translateParty2String } from '../command-manager.controller';
 
 /*
   @author AJu (zoz0312)
@@ -62,7 +63,11 @@ export class PartyUserManager {
 
       return {
         success: true,
-        message: `${partyName} 파티에 참여하였습니다.`,
+        message: translateParty2String({
+          room,
+          message: `${partyName} 파티에 참여하였습니다.`,
+          partyName,
+        }),
       }
     }
 
