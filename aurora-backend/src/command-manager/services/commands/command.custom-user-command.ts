@@ -1,4 +1,4 @@
-import { SHOW_USER_COMMAND_LIST, CREATE_USER_COMMNAD } from "src/constants";
+import { SHOW_USER_COMMAND_LIST, CREATE_USER_COMMNAD, READ_USER_COMMAND } from "src/constants";
 import { DELETE_USER_COMMAND } from '../../../constants';
 
 /*
@@ -6,6 +6,11 @@ import { DELETE_USER_COMMAND } from '../../../constants';
   User Command 추가를 위한 명령어 목록
 */
 export const commandCustomUserCommand: commandDTO[] = [
+  {
+    name: READ_USER_COMMAND,
+    command: ['allCommandRead'],
+    desc: '등록된 전체 키워드 확인',
+  },
   {
     name: CREATE_USER_COMMNAD,
     command: ['학습하기', '가르치기',],
@@ -23,5 +28,5 @@ export const commandCustomUserCommand: commandDTO[] = [
     command: ['학습제거', '학습삭제'],
     desc: '오로라 학습 제거',
     argumentDesc: ['[일부삭제](학습키워드)::(ID) 또는 [전체삭제](학습키워드)::all'],
-  }
+  },
 ];

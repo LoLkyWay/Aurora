@@ -2,7 +2,7 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON } from 'src/constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND } from 'src/constants';
 import { FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, RANDOM_LOTTO } from '../constants';
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
@@ -62,6 +62,8 @@ export class CommandManagerController {
               return this.partyHelp.printHelp();
             case HELP_PARTY_DETAIL:
               return this.partyHelp.printHelpDetail();
+            case READ_USER_COMMAND:
+              return this.customUserCommand.readUserCommand();
             case CREATE_USER_COMMNAD:
               return this.customUserCommand.createUserCommand(chatBotInput);
             case SHOW_USER_COMMAND_LIST:

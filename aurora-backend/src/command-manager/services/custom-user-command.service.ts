@@ -19,6 +19,20 @@ export class CustomUserCommand {
     private readonly keyword: Repository<Keyword>,
   ) {}
 
+  async readUserCommand(
+  ): Promise<ChatBotOutput> {
+    const allKeyword = await this.keyword.find({
+      relations: ['commands'],
+    });
+    const rtnText = allKeyword.map(item => {
+      return `[${item.keyword}] => ${item.commands.length}개`;
+    })
+    return {
+      success: true,
+      message: rtnText.join('\n'),
+    }
+  }
+
   async createUserCommand(
     chatBotInput :ChatBotInput
   ): Promise<ChatBotOutput> {
