@@ -9,7 +9,7 @@ import { Keyword } from "./keyword.entitiy";
 */
 @Entity()
 export class Commands extends CoreEntity {
-  @Column()
+  @Column({ type: 'longtext' })
   outputText: string;
 
   // @Column()
