@@ -24,6 +24,9 @@ export class CustomUserCommand {
     myRoom: Rooms,
   ): Promise<ChatBotOutput> {
     const allKeyword = await this.keyword.find({
+      where: {
+        rooms: myRoom,
+      },
       relations: ['commands'],
     });
     const rtnText = allKeyword.map(item => {
