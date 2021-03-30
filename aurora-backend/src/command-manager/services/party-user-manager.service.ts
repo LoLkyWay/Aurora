@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { party } from '../../cache-party';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
@@ -7,6 +8,7 @@ import { translateParty2String } from '../command-manager.controller';
   @author AJu (zoz0312)
   Party 참가 유저 관련 명령어
 */
+@Injectable()
 export class PartyUserManager {
   constructor (
   ) {

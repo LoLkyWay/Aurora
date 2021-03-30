@@ -5,6 +5,8 @@ import { Commands } from '../../user-custom-command/entities/commands.entitiy';
 import { Keyword } from '../../user-custom-command/entities/keyword.entitiy';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
+import { CommandsRepository } from '../../user-custom-command/repositories/commands.repository';
+import { KeywordRepository } from '../../user-custom-command/repositories/keyword.repository';
 
 /*
   @author AJu (zoz0312)
@@ -13,10 +15,8 @@ import { trimInput } from '../../common/trimInput';
 @Injectable()
 export class CustomUserCommand {
   constructor (
-    @InjectRepository(Commands)
-    private readonly commands: Repository<Commands>,
-    @InjectRepository(Keyword)
-    private readonly keyword: Repository<Keyword>,
+    private readonly commands: CommandsRepository,
+    private readonly keyword: KeywordRepository,
   ) {}
 
   async readUserCommand(

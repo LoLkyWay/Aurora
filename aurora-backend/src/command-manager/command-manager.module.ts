@@ -9,15 +9,23 @@ import { PartyUserManager } from './services/party-user-manager.service';
 import { PartyHelp } from './services/party-help.service';
 import { Working } from '../user-custom-command/entities/working.entity';
 import { WorkingListManager } from './services/working-list.service';
+import { CommandsRepository } from '../user-custom-command/repositories/commands.repository';
+import { KeywordRepository } from '../user-custom-command/repositories/keyword.repository';
+import { WorkingRepository } from '../user-custom-command/repositories/working.repository';
+import { RoomsRepository } from '../user-custom-command/repositories/rooms.repository';
 
 /*
   @author AJu (zoz0312)
 */
 @Module({
   imports: [TypeOrmModule.forFeature([
-    Commands,
-    Keyword,
-    Working,
+    CommandsRepository,
+    KeywordRepository,
+    WorkingRepository,
+    RoomsRepository,
+    // Commands,
+    // Keyword,
+    // Working,
   ])],
   controllers: [CommandManagerController],
   providers: [

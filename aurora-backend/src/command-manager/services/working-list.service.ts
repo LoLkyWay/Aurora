@@ -1,17 +1,19 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 import { Working, Status } from '../../user-custom-command/entities/working.entity';
+import { WorkingRepository } from '../../user-custom-command/repositories/working.repository';
 
 /*
   @author AJu (zoz0312)
   Party 참가 유저 관련 명령어
 */
+@Injectable()
 export class WorkingListManager {
   constructor (
-    @InjectRepository(Working)
-    private readonly working: Repository<Working>,
+    private readonly working: WorkingRepository,
   ) {
   }
 

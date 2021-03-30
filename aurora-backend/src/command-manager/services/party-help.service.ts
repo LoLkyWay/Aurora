@@ -1,9 +1,11 @@
+import { Injectable } from '@nestjs/common';
 import { commandList } from './commands/index';
 
 /*
   @author AJu (zoz0312)
   Party 도움말 관련 명령어
 */
+@Injectable()
 export class PartyHelp {
   constructor() {}
 

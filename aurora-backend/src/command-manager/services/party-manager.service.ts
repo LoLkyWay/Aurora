@@ -3,11 +3,13 @@ import { deepCopy } from 'deep-copy-ts';
 import { translateParty2String } from '../command-manager.controller';
 import { trimInput } from '../../common/trimInput';
 import { ChatBotInput, ChatBotOutput } from 'src/common/dtos/chatBot.dto';
+import { Injectable } from '@nestjs/common';
 
 /*
   @author AJu (zoz0312)
   Party 관리 관련 명령어
 */
+@Injectable()
 export class PartyManager {
   constructor (
   ) {
