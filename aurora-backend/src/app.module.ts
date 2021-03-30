@@ -9,6 +9,7 @@ import { UserCustomCommandModule } from './user-custom-command/user-custom-comma
 import { Keyword } from './user-custom-command/entities/keyword.entitiy';
 import { Commands } from './user-custom-command/entities/commands.entitiy';
 import { Working } from './user-custom-command/entities/working.entity';
+import { Rooms } from './user-custom-command/entities/rooms.entitiy';
 
 /*
   @author AJu (zoz0312)
@@ -43,6 +44,7 @@ import { Working } from './user-custom-command/entities/working.entity';
         Commands,
         Keyword,
         Working,
+        Rooms,
       ],
     }),
     ScheduleModule.forRoot()

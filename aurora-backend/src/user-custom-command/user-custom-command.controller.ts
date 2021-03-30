@@ -8,7 +8,10 @@ import { Keyword } from './entities/keyword.entitiy';
 import { keywordList } from './services/keywords/index';
 import { WorkingList } from './services/working-list.service';
 import { LottoDraw } from './services/lotto-draw.service';
+import { UserCustomCommandService } from './services/user-custom-command.service';
 import { RANDOM_LOTTO } from '../constants';
+import { Rooms } from './entities/rooms.entitiy';
+import { RoomsRepository } from './repositories/rooms.repository';
 
 /*
   @author AJu (zoz0312)
@@ -21,18 +24,26 @@ export class UserCustomCommandController {
     private readonly commands: Repository<Commands>,
     @InjectRepository(Keyword)
     private readonly keyword: Repository<Keyword>,
+    private readonly rooms: RoomsRepository,
     private workingList: WorkingList,
     private lottoDraw: LottoDraw,
+    private customCommand: UserCustomCommandService,
   ) {}
 
   @Post()
-  async userCustomCommand(@Body() {
-    room,
-    msg,
-    sender,
-    isGroupChat,
-    image,
-  }: ChatBotInput): Promise<ChatBotOutput> {
+  async userCustomCommand(
+		@Body()
+		chatBotInput : ChatBotInput
+	): Promise<ChatBotOutput> {
+		const {
+			room,
+			msg,
+			sender,
+			isGroupChat,
+			image,
+		} = chatBotInput;
+
+    const myRoom = await this.rooms.findMyRoom(room);
 
     /* 특정 키워드 필터링 */
     for (let i=0; i<keywordList.length; i++) {
@@ -56,38 +67,12 @@ export class UserCustomCommandController {
         message: '문자가 너무 깁니다.',
       }
     }
-    try {
-      const outputText = await this.keyword.findOne({
-        where: {
-          keyword: msg
-        },
-        relations: ['commands']
-      });
 
-      if (!outputText) {
-        return {
-          success: false,
-          message: '등록된 키워드가 없습니다.'
-        }
-      }
-
-      const len = outputText.commands.length;
-      if (len === 0) {
-        return {
-          success: false,
-          message: '등록된 단어가 없습니다.'
-        }
-      }
-      const ramdomValue = Math.floor(Math.random() * (len))
-      return {
-        success: true,
-        message: outputText.commands[ramdomValue].outputText,
-      }
-    } catch (error) {
-      return {
-        success: false,
-        error,
-      }
-    }
+		return this.customCommand.findRandomCommand(chatBotInput, myRoom);
+    //  const findedRoom = await this.rooms.findOne({
+    //    where: {
+    //      roomName: room,
+    //    }
+    //  });
   }
 }

@@ -1,6 +1,7 @@
 import { CoreEntity } from "src/common/entities/core.entities";
-import { Column, Entity, OneToMany } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, RelationId } from "typeorm";
 import { Commands } from "./commands.entitiy";
+import { Rooms } from "./rooms.entitiy";
 
 /*
   @author AJu (zoz0312)
@@ -10,6 +11,16 @@ import { Commands } from "./commands.entitiy";
 export class Keyword extends CoreEntity {
   @Column()
   keyword: string;
+
+  @ManyToOne(
+    type => Rooms,
+  )
+  rooms: Rooms;
+
+  @RelationId(
+    (keyword: Keyword) => keyword.rooms
+  )
+  roomId: number;
 
   // @Column({ array: true })
   @OneToMany(
