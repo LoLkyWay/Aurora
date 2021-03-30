@@ -19,10 +19,10 @@ import { RoomsRepository } from './repositories/rooms.repository';
 @Controller('user-custom-command')
 export class UserCustomCommandController {
   constructor(
-    private readonly rooms: RoomsRepository,
     private workingList: WorkingList,
     private lottoDraw: LottoDraw,
     private customCommand: UserCustomCommandService,
+    private readonly rooms: RoomsRepository,
   ) {}
 
   @Post()

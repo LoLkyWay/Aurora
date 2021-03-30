@@ -10,6 +10,7 @@ import { commandList } from './services/commands/index';
 import { PartyHelp } from './services/party-help.service';
 import { CustomUserCommand } from './services/custom-user-command.service';
 import { WorkingListManager } from './services/working-list.service';
+import { RoomsRepository } from '../user-custom-command/repositories/rooms.repository';
 
 /*
   @author AJu (zoz0312)
@@ -24,19 +25,22 @@ export class CommandManagerController {
     private partyUserManager: PartyUserManager,
     private partyHelp: PartyHelp,
     private workingManager: WorkingListManager,
+    private readonly rooms: RoomsRepository,
   ) {}
 
   @Post()
   async commandManage(
     @Body() chatBotInput: ChatBotInput
   ): Promise<ChatBotOutput> {
-    const { msg, sender } = chatBotInput;
+    const { room, msg, sender } = chatBotInput;
     if (msg === undefined || msg === '') {
       return {
         success: false,
         message: '비정상적인 명령어 입니다 (X_x)',
       };
     }
+
+    const myRoom = await this.rooms.findMyRoom(room);
 
     if (msg[0] === '/') {
       const userCommand = msg.slice(1);
@@ -63,13 +67,13 @@ export class CommandManagerController {
             case HELP_PARTY_DETAIL:
               return this.partyHelp.printHelpDetail();
             case READ_USER_COMMAND:
-              return this.customUserCommand.readUserCommand();
+              return this.customUserCommand.readUserCommand(myRoom);
             case CREATE_USER_COMMNAD:
-              return this.customUserCommand.createUserCommand(chatBotInput);
+              return this.customUserCommand.createUserCommand(chatBotInput, myRoom);
             case SHOW_USER_COMMAND_LIST:
-              return this.customUserCommand.findUserCommand(chatBotInput);
+              return this.customUserCommand.findUserCommand(chatBotInput, myRoom);
             case DELETE_USER_COMMAND:
-              return this.customUserCommand.deleteUserCommand(chatBotInput);
+              return this.customUserCommand.deleteUserCommand(chatBotInput, myRoom);
 
             case CREATE_WORKING:
               return this.workingManager.createWorking(chatBotInput);

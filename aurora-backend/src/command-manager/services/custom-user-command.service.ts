@@ -7,6 +7,7 @@ import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 import { CommandsRepository } from '../../user-custom-command/repositories/commands.repository';
 import { KeywordRepository } from '../../user-custom-command/repositories/keyword.repository';
+import { Rooms } from '../../user-custom-command/entities/rooms.entitiy';
 
 /*
   @author AJu (zoz0312)
@@ -20,6 +21,7 @@ export class CustomUserCommand {
   ) {}
 
   async readUserCommand(
+    myRoom: Rooms,
   ): Promise<ChatBotOutput> {
     const allKeyword = await this.keyword.find({
       relations: ['commands'],
@@ -34,7 +36,8 @@ export class CustomUserCommand {
   }
 
   async createUserCommand(
-    chatBotInput :ChatBotInput
+    chatBotInput :ChatBotInput,
+    myRoom: Rooms,
   ): Promise<ChatBotOutput> {
     const { sender: userName } = chatBotInput;
     const [_, arguement] = trimInput(chatBotInput);
@@ -56,14 +59,16 @@ export class CustomUserCommand {
     try {
       let dbKeyword = await this.keyword.findOne({
         where: {
-          keyword
+          keyword,
+          rooms: myRoom,
         }
       });
 
       if (!dbKeyword) {
         dbKeyword = await this.keyword.save(
           this.keyword.create({
-            keyword
+            keyword,
+            rooms: myRoom,
           })
         );
       }
@@ -104,7 +109,8 @@ export class CustomUserCommand {
   }
 
   async findUserCommand(
-    chatBotInput :ChatBotInput
+    chatBotInput :ChatBotInput,
+    myRoom: Rooms,
   ): Promise<ChatBotOutput> {
     const [_, keyword] = trimInput(chatBotInput);
 
@@ -114,9 +120,13 @@ export class CustomUserCommand {
         message: '키워드를 입력해주세요!'
       }
     }
+
     try {
       const outputText = await this.keyword.findOne({
-        where: { keyword },
+        where: {
+          keyword,
+          rooms: myRoom,
+        },
         relations: ['commands'],
       });
 
@@ -145,9 +155,10 @@ export class CustomUserCommand {
   }
 
   async deleteUserCommand(
-    chatBotInput :ChatBotInput
+    chatBotInput :ChatBotInput,
+    myRoom: Rooms,
   ): Promise<ChatBotOutput> {
-    const { sender: userName } = chatBotInput;
+    // const { sender: userName } = chatBotInput;
     const [_, arguement] = trimInput(chatBotInput);
     const [keyword, arg] = arguement.split('::');
 
@@ -170,7 +181,10 @@ export class CustomUserCommand {
       if (arg === 'all') {
         // 전체삭제
         const key = await this.keyword.findOne({
-          where: { keyword },
+          where: {
+            keyword,
+            rooms: myRoom,
+          },
           relations: ['commands'],
         });
 
@@ -183,7 +197,10 @@ export class CustomUserCommand {
       } else {
         // 부분삭제
         const key = await this.keyword.findOne({
-          where: { keyword },
+          where: {
+            keyword,
+            rooms: myRoom,
+          },
           relations: ['commands'],
         });
 
