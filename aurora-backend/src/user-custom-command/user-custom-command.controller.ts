@@ -20,10 +20,6 @@ import { RoomsRepository } from './repositories/rooms.repository';
 @Controller('user-custom-command')
 export class UserCustomCommandController {
   constructor(
-    @InjectRepository(Commands)
-    private readonly commands: Repository<Commands>,
-    @InjectRepository(Keyword)
-    private readonly keyword: Repository<Keyword>,
     private readonly rooms: RoomsRepository,
     private workingList: WorkingList,
     private lottoDraw: LottoDraw,
@@ -69,10 +65,5 @@ export class UserCustomCommandController {
     }
 
 		return this.customCommand.findRandomCommand(chatBotInput, myRoom);
-    //  const findedRoom = await this.rooms.findOne({
-    //    where: {
-    //      roomName: room,
-    //    }
-    //  });
   }
 }

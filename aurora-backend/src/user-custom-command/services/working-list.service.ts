@@ -1,7 +1,6 @@
-import { InjectRepository } from "@nestjs/typeorm";
 import { ChatBotOutput } from "src/common/dtos/chatBot.dto";
-import { Repository } from "typeorm";
-import { Status, Working } from '../entities/working.entity';
+import { Status } from '../entities/working.entity';
+import { WorkingRepository } from '../repositories/working.repository';
 
 
 /*
@@ -10,8 +9,7 @@ import { Status, Working } from '../entities/working.entity';
 */
 export class WorkingList {
   constructor(
-    @InjectRepository(Working)
-    private readonly working: Repository<Working>
+    private readonly working: WorkingRepository,
   ) {
   }
 

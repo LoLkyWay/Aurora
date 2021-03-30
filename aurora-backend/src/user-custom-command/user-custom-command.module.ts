@@ -9,6 +9,8 @@ import { LottoDraw } from './services/lotto-draw.service';
 import { UserCustomCommandService } from './services/user-custom-command.service';
 import { Rooms } from './entities/rooms.entitiy';
 import { RoomsRepository } from './repositories/rooms.repository';
+import { KeywordRepository } from './repositories/keyword.repository';
+import { CommandsRepository } from './repositories/commands.repository';
 
 /*
   @author AJu (zoz0312)
@@ -16,10 +18,13 @@ import { RoomsRepository } from './repositories/rooms.repository';
 */
 @Module({
   imports: [TypeOrmModule.forFeature([
-  Commands,
+    Commands,
     Keyword,
     Working,
     Rooms,
+    KeywordRepository,
+    CommandsRepository,
+    KeywordRepository,
     RoomsRepository,
   ])],
   controllers: [UserCustomCommandController],

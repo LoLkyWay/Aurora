@@ -1,4 +1,3 @@
-import { InjectRepository } from "@nestjs/typeorm";
 import { EntityRepository, Repository } from "typeorm";
 import { Rooms } from "../entities/rooms.entitiy";
 
