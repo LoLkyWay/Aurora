@@ -1,12 +1,13 @@
+import { Injectable } from "@nestjs/common";
 import { ChatBotOutput } from "src/common/dtos/chatBot.dto";
 import { Status } from '../entities/working.entity';
 import { WorkingRepository } from '../repositories/working.repository';
-
 
 /*
   @author AJu (zoz0312)
   Party 관리 관련 명령어
 */
+@Injectable()
 export class WorkingList {
   constructor(
     private readonly working: WorkingRepository,

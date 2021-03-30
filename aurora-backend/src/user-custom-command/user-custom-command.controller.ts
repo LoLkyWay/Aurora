@@ -10,7 +10,6 @@ import { WorkingList } from './services/working-list.service';
 import { LottoDraw } from './services/lotto-draw.service';
 import { UserCustomCommandService } from './services/user-custom-command.service';
 import { RANDOM_LOTTO } from '../constants';
-import { Rooms } from './entities/rooms.entitiy';
 import { RoomsRepository } from './repositories/rooms.repository';
 
 /*

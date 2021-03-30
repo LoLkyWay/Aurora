@@ -11,6 +11,7 @@ import { Rooms } from './entities/rooms.entitiy';
 import { RoomsRepository } from './repositories/rooms.repository';
 import { KeywordRepository } from './repositories/keyword.repository';
 import { CommandsRepository } from './repositories/commands.repository';
+import { WorkingRepository } from './repositories/working.repository';
 
 /*
   @author AJu (zoz0312)
@@ -19,12 +20,12 @@ import { CommandsRepository } from './repositories/commands.repository';
 @Module({
   imports: [TypeOrmModule.forFeature([
     Commands,
-    Keyword,
-    Working,
-    Rooms,
-    KeywordRepository,
     CommandsRepository,
+    Keyword,
     KeywordRepository,
+    Working,
+    WorkingRepository,
+    Rooms,
     RoomsRepository,
   ])],
   controllers: [UserCustomCommandController],

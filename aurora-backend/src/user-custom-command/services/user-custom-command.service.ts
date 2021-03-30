@@ -3,15 +3,17 @@ import { Keyword } from '../entities/keyword.entitiy';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Rooms } from '../entities/rooms.entitiy';
+import { Injectable } from '@nestjs/common';
+import { KeywordRepository } from '../repositories/keyword.repository';
 
 /*
   @author AJu (zoz0312)
   User Custom Command Services
 */
+@Injectable()
 export class UserCustomCommandService {
   constructor (
-    @InjectRepository(Keyword)
-    private readonly keyword: Repository<Keyword>,
+    private readonly keyword: KeywordRepository,
   ) {
   }
 
