@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
-import { Working, Status } from '../../user-custom-command/entities/working.entity';
+import { Status } from '../../user-custom-command/entities/working.entity';
 import { WorkingRepository } from '../../user-custom-command/repositories/working.repository';
 
 /*

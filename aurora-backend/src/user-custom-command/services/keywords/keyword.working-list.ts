@@ -1,4 +1,4 @@
-import { SHOW_WORKING_LIST } from "src/constants";
+import { SHOW_WORKING_LIST } from "src/command-manager/command-manager.constants";
 
 export const keywordWorkingList: keywordDTO[] = [
   {

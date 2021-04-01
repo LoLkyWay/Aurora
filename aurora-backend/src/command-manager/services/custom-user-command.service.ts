@@ -20,6 +20,15 @@ export class CustomUserCommand {
     private readonly keyword: KeywordRepository,
   ) {}
 
+  async customUserCommandService(
+    chatBotInput: ChatBotInput,
+  ): Promise<ChatBotOutput> {
+    
+    return {
+      success: true
+    }
+  }
+
   async readUserCommand(
     myRoom: Rooms,
   ): Promise<ChatBotOutput> {

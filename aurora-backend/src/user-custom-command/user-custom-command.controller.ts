@@ -1,6 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { HELP_PARTY, RANDOM_PENTION_LOTTO, SHOW_WORKING_LIST } from 'src/constants';
 import { Repository } from 'typeorm';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { Commands } from './entities/commands.entitiy';
@@ -9,8 +8,9 @@ import { keywordList } from './services/keywords/index';
 import { WorkingList } from './services/working-list.service';
 import { LottoDraw } from './services/lotto-draw.service';
 import { UserCustomCommandService } from './services/user-custom-command.service';
-import { RANDOM_LOTTO } from '../constants';
+import { RANDOM_LOTTO, RANDOM_PENTION_LOTTO } from '../constants';
 import { RoomsRepository } from './repositories/rooms.repository';
+import { SHOW_WORKING_LIST } from 'src/command-manager/command-manager.constants';
 
 /*
   @author AJu (zoz0312)
