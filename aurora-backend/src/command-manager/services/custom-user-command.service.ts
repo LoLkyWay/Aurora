@@ -8,6 +8,8 @@ import { trimInput } from '../../common/trimInput';
 import { CommandsRepository } from '../../user-custom-command/repositories/commands.repository';
 import { KeywordRepository } from '../../user-custom-command/repositories/keyword.repository';
 import { Rooms } from '../../user-custom-command/entities/rooms.entitiy';
+import { CREATE_USER_COMMNAD, DELETE_USER_COMMAND, READ_USER_COMMAND, SHOW_USER_COMMAND_LIST } from "../command-manager.constants";
+import { RoomsRepository } from '../../user-custom-command/repositories/rooms.repository';
 
 /*
   @author AJu (zoz0312)
@@ -18,14 +20,25 @@ export class CustomUserCommand {
   constructor (
     private readonly commands: CommandsRepository,
     private readonly keyword: KeywordRepository,
+    private readonly rooms: RoomsRepository,
   ) {}
 
-  async customUserCommandService(
-    chatBotInput: ChatBotInput,
+  async mainService (
+    chatBotInput :ChatBotInput,
+    name: string,
   ): Promise<ChatBotOutput> {
-    
-    return {
-      success: true
+    const { room } = chatBotInput;
+    const myRoom = await this.rooms.findMyRoom(room);
+
+    switch (name) {
+      case READ_USER_COMMAND:
+        return this.readUserCommand(myRoom);
+      case CREATE_USER_COMMNAD:
+        return this.createUserCommand(chatBotInput, myRoom);
+      case SHOW_USER_COMMAND_LIST:
+        return this.findUserCommand(chatBotInput, myRoom);
+      case DELETE_USER_COMMAND:
+        return this.deleteUserCommand(chatBotInput, myRoom);
     }
   }
 
