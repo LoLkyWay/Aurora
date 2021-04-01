@@ -15,6 +15,7 @@ export class PartyUserManager {
   ) {
   }
 
+  // Call mainService by controller
   mainService (
     chatBotInput :ChatBotInput,
     name: string,

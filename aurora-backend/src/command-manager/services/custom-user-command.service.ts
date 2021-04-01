@@ -19,6 +19,7 @@ export class CustomUserCommand {
     private readonly rooms: RoomsRepository,
   ) {}
 
+  // Call mainService by controller
   async mainService (
     chatBotInput :ChatBotInput,
     name: string,

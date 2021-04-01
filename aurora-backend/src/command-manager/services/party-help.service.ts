@@ -11,6 +11,7 @@ import { commandList } from './commands/index';
 export class PartyHelp {
   constructor() {}
 
+  // Call mainService by controller
   mainService (
     name: string,
   ): ChatBotOutput {
