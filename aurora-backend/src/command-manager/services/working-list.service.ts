@@ -3,6 +3,7 @@ import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 import { Status } from '../../user-custom-command/entities/working.entity';
 import { WorkingRepository } from '../../user-custom-command/repositories/working.repository';
+import { CREATE_WORKING, DELETE_WORKING, UPDATE_WORKING } from '../command-manager.constants';
 
 /*
   @author AJu (zoz0312)
@@ -13,6 +14,25 @@ export class WorkingListManager {
   constructor (
     private readonly working: WorkingRepository,
   ) {
+  }
+
+  async mainService (
+    chatBotInput :ChatBotInput,
+    name: string,
+  ): Promise<ChatBotOutput> {
+    switch (name) {
+      case CREATE_WORKING:
+        return this.createWorking(chatBotInput);
+      case UPDATE_WORKING:
+        return this.updateWorking(chatBotInput);
+      case DELETE_WORKING:
+        return this.deleteWorking(chatBotInput);
+      default:
+        return {
+          success: false,
+          message: `${name}은 잘못 되었습니다.`
+        }
+    }
   }
 
   async createWorking(

@@ -2,7 +2,7 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party, partyStructureDTO } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND, FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, PARTY_MANAGER_SERVICE, WORKING_LIST_MANAGER_SERVICE } from './command-manager.constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND, FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, PARTY_MANAGER_SERVICE, WORKING_LIST_MANAGER_SERVICE, PARTY_HELP_SERVICE } from './command-manager.constants';
 
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
@@ -27,14 +27,13 @@ export class CommandManagerController {
     private partyUserManager: PartyUserManager,
     private partyHelp: PartyHelp,
     private workingManager: WorkingListManager,
-    private readonly rooms: RoomsRepository,
   ) {}
 
   @Post()
   async commandManage(
     @Body() chatBotInput: ChatBotInput
   ): Promise<ChatBotOutput> {
-    const { room, msg, sender } = chatBotInput;
+    const { msg } = chatBotInput;
     if (msg === undefined || msg === '') {
       return {
         success: false,
@@ -46,10 +45,8 @@ export class CommandManagerController {
     if (msg[0] === '/') {
       const userCommand = msg.slice(1);
       const command = userCommand.split(' ')[0];
-      const myRoom = await this.rooms.findMyRoom(room);
 
       for (let i=0; i<commandList.length; i++) {
-        const type = commandList[i];
         const {
           command: cmd,
           service,
@@ -59,50 +56,15 @@ export class CommandManagerController {
         if (cmd.includes(command)) {
           switch (service) {
             case PARTY_MANAGER_SERVICE:
-              this.partyManager.mainService(chatBotInput, name);
-              break;
+              return this.partyManager.mainService(chatBotInput, name);
             case PARTY_USER_MANAGER_SERVICE:
-              break;
+              return this.partyUserManager.mainService(chatBotInput, name);
             case CUSTOM_USER_COMMAND_SERVICE:
-              break;
+              return this.customUserCommand.mainService(chatBotInput, name);
             case WORKING_LIST_MANAGER_SERVICE:
-              break;
-          }
-        }
-
-        if (type.command.includes(command)) {
-          switch (type.name) {
-            case FIND_PARTY:
-              return this.partyManager.findParty(chatBotInput);
-            case PARTY_PRINT_JSON:
-              return this.partyManager.printPartyJson();
-            case CREATE_PARTY:
-              return this.partyManager.createParty(chatBotInput);
-            case DELETE_PARTY:
-              return this.partyManager.deleteParty(chatBotInput);
-            case ENTER_PARTY:
-              return this.partyUserManager.enterParty(chatBotInput);
-            case EXIT_PARTY:
-              return this.partyUserManager.exitParty(chatBotInput);
-            case HELP_PARTY:
-              return this.partyHelp.printHelp();
-            case HELP_PARTY_DETAIL:
-              return this.partyHelp.printHelpDetail();
-            case READ_USER_COMMAND:
-              return this.customUserCommand.readUserCommand(myRoom);
-            case CREATE_USER_COMMNAD:
-              return this.customUserCommand.createUserCommand(chatBotInput, myRoom);
-            case SHOW_USER_COMMAND_LIST:
-              return this.customUserCommand.findUserCommand(chatBotInput, myRoom);
-            case DELETE_USER_COMMAND:
-              return this.customUserCommand.deleteUserCommand(chatBotInput, myRoom);
-
-            case CREATE_WORKING:
-              return this.workingManager.createWorking(chatBotInput);
-            case UPDATE_WORKING:
-              return this.workingManager.updateWorking(chatBotInput);
-            case DELETE_WORKING:
-              return this.workingManager.deleteWorking(chatBotInput);
+              return this.workingManager.mainService(chatBotInput, name);
+            case PARTY_HELP_SERVICE:
+              return this.partyHelp.mainService(name);
           }
         }
       }

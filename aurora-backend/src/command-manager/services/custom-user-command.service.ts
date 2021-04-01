@@ -1,8 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Commands } from '../../user-custom-command/entities/commands.entitiy';
-import { Keyword } from '../../user-custom-command/entities/keyword.entitiy';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
 import { CommandsRepository } from '../../user-custom-command/repositories/commands.repository';
@@ -39,6 +35,11 @@ export class CustomUserCommand {
         return this.findUserCommand(chatBotInput, myRoom);
       case DELETE_USER_COMMAND:
         return this.deleteUserCommand(chatBotInput, myRoom);
+      default:
+        return {
+          success: false,
+          message: `${name}은 잘못 되었습니다.`
+        }
     }
   }
 

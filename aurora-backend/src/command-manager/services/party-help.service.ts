@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { ChatBotOutput } from 'src/common/dtos/chatBot.dto';
+import { HELP_PARTY, HELP_PARTY_DETAIL } from '../command-manager.constants';
 import { commandList } from './commands/index';
 
 /*
@@ -8,6 +10,22 @@ import { commandList } from './commands/index';
 @Injectable()
 export class PartyHelp {
   constructor() {}
+
+  mainService (
+    name: string,
+  ): ChatBotOutput {
+    switch (name) {
+      case HELP_PARTY:
+        return this.printHelp();
+      case HELP_PARTY_DETAIL:
+        return this.printHelpDetail();
+      default:
+        return {
+          success: false,
+          message: `${name}은 잘못 되었습니다.`
+        }
+    }
+  }
 
   printHelp() {
     let message = '';

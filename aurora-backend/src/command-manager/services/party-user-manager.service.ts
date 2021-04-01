@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { party } from '../../cache-party';
 import { ChatBotInput, ChatBotOutput } from '../../common/dtos/chatBot.dto';
 import { trimInput } from '../../common/trimInput';
+import { ENTER_PARTY, EXIT_PARTY } from '../command-manager.constants';
 import { translateParty2String } from '../command-manager.controller';
 
 /*
@@ -13,6 +14,24 @@ export class PartyUserManager {
   constructor (
   ) {
   }
+
+  mainService (
+    chatBotInput :ChatBotInput,
+    name: string,
+  ): ChatBotOutput {
+    switch (name) {
+      case ENTER_PARTY:
+        return this.enterParty(chatBotInput);
+      case EXIT_PARTY:
+        return this.exitParty(chatBotInput);
+      default:
+        return {
+          success: false,
+          message: `${name}은 잘못 되었습니다.`
+        }
+    }
+  }
+
 
   /*
     enterParty
