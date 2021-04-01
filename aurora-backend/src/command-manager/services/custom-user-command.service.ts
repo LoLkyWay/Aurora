@@ -68,7 +68,7 @@ export class CustomUserCommand {
   ): Promise<ChatBotOutput> {
     const { sender: userName } = chatBotInput;
     const [_, arguement] = trimInput(chatBotInput);
-    const [keyword, outputText] = arguement.split('::');
+    const [keyword, outputTexts] = arguement.split('::');
 
     if (!keyword) {
       return {
@@ -76,7 +76,7 @@ export class CustomUserCommand {
         message: '키워드가 존재하지 않습니다!',
       }
     }
-    if (!outputText) {
+    if (!outputTexts) {
       return {
         success: false,
         message: '학습할 글자가 없습니다!',
@@ -100,26 +100,39 @@ export class CustomUserCommand {
         );
       }
 
-      const commands = await this.commands.findOne({
-        where: {
+      const outputText = outputTexts.split('|');
+      const where = outputText.map(outputText => {
+        return {
           outputText,
           keyword: dbKeyword,
         }
       });
 
-      if (commands) {
+      const commands = await this.commands.find({ where });
+      console.log('commands', commands)
+
+      if (commands.length > 0) {
+        if (commands.length === 1) {
+          return {
+            success: false,
+            message: `[${commands[0].outputText}]는 이미 등록되어있습니다.`
+          }
+        }
         return {
           success: false,
-          message: `[${outputText}]는 이미 등록되어있습니다.`
+          message: `${commands.length}갯수가 이미 등록되어있습니다.`
         }
       }
 
       await this.commands.save(
-        this.commands.create({
-          keyword: dbKeyword,
-          outputText,
-          userName,
-        })
+        this.commands.create(
+          where.map(item => {
+            return {
+              ...item,
+              userName,
+            }
+          })
+        )
       );
 
       return {

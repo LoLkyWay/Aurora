@@ -18,7 +18,7 @@ export const commandCustomUserCommand: commandDTO[] = [
     name: CREATE_USER_COMMNAD,
     command: ['학습하기', '가르치기',],
     desc: '오로라 학습하기',
-    argumentDesc: ['(학습키워드)::(내용)'],
+    argumentDesc: ['(학습키워드)::(내용) 또는 (학습키워드)::(내용1)|(내용2)|(내용3)...'],
   },
   {
     service,
