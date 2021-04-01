@@ -10,6 +10,7 @@ export const commandCustomUserCommand: commandDTO[] = [
     name: READ_USER_COMMAND,
     command: ['allCommandRead'],
     desc: '등록된 전체 키워드 확인',
+    hiddenFlag: true,
   },
   {
     name: CREATE_USER_COMMNAD,

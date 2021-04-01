@@ -37,6 +37,12 @@ export class PartyHelp {
     message += '\n';
     message += '예시)\n'
     message += '/학습하기 안녕::안녕하세요\n'
+    message += '\n';
+    message += '■ 오로라 특정키워드 명령어\n'
+    message += '\n';
+    message += '로또\n';
+    message += '연금복권\n';
+    message += '작업목록\n';
 
     return {
       success: true,
@@ -51,7 +57,11 @@ export class PartyHelp {
       name,
       desc,
       argumentDesc = [],
+      hiddenFlag = false,
     }) => {
+      if (hiddenFlag) {
+        return false;
+      }
       commandDesc += `[${desc}]\n`;
       command.map(item => {
         commandDesc += `/${item}`;
