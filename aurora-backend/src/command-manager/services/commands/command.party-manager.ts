@@ -1,11 +1,11 @@
 
-import { FIND_PARTY, PARTY_PRINT_JSON, CREATE_PARTY, DELETE_PARTY } from '../../command-manager.constants';
+import { FIND_PARTY, PARTY_PRINT_JSON, CREATE_PARTY, DELETE_PARTY, PARTY_MANAGER_SERVICE } from '../../command-manager.constants';
 
 /*
   @author AJu (zoz0312)
   Party 관리에 관련된 명령어 목록
 */
-const service = 'partyManagerService';
+const service = PARTY_MANAGER_SERVICE;
 export const commandPartyManager: commandDTO[] = [
   {
     service,

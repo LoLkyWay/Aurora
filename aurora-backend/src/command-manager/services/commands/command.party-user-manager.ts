@@ -1,10 +1,10 @@
-import { ENTER_PARTY, EXIT_PARTY } from "src/command-manager/command-manager.constants";
+import { ENTER_PARTY, EXIT_PARTY, PARTY_USER_MANAGER_SERVICE } from "src/command-manager/command-manager.constants";
 
 /*
   @author AJu (zoz0312)
   Party User 관리에 관련된 명령어 목록
 */
-const service = 'partyUserManagerService';
+const service = PARTY_USER_MANAGER_SERVICE;
 export const commandPartyUserManager: commandDTO[] = [
   {
     service,

@@ -1,10 +1,10 @@
-import { HELP_PARTY, HELP_PARTY_DETAIL } from "src/command-manager/command-manager.constants";
+import { HELP_PARTY, HELP_PARTY_DETAIL, PARTY_HELP_SERVICE } from "src/command-manager/command-manager.constants";
 
 /*
   @author AJu (zoz0312)
   Party 관리에 관련된 명령어 목록
 */
-const service = 'partyHelpService';
+const service = PARTY_HELP_SERVICE;
 export const commandPartyHelp: commandDTO[] = [
   {
     service,

@@ -2,7 +2,7 @@ import { Controller, Post, Get, Param, Body } from '@nestjs/common';
 import { ChatBotInput, ChatBotOutput } from '../common/dtos/chatBot.dto';
 import { party, partyStructureDTO } from '../cache-party';
 import { PartyManager } from './services/party-manager.service';
-import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND, FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING } from './command-manager.constants';
+import { CREATE_PARTY, ENTER_PARTY, DELETE_PARTY, EXIT_PARTY, HELP_PARTY, CREATE_USER_COMMNAD, SHOW_USER_COMMAND_LIST, UPDATE_WORKING, HELP_PARTY_DETAIL, PARTY_PRINT_JSON, READ_USER_COMMAND, FIND_PARTY, DELETE_USER_COMMAND, CREATE_WORKING, DELETE_WORKING, PARTY_MANAGER_SERVICE, WORKING_LIST_MANAGER_SERVICE } from './command-manager.constants';
 
 import { PartyUserManager } from './services/party-user-manager.service';
 import { Cron } from '@nestjs/schedule';
@@ -11,6 +11,8 @@ import { PartyHelp } from './services/party-help.service';
 import { CustomUserCommand } from './services/custom-user-command.service';
 import { WorkingListManager } from './services/working-list.service';
 import { RoomsRepository } from '../user-custom-command/repositories/rooms.repository';
+import { PARTY_USER_MANAGER_SERVICE } from 'src/command-manager/command-manager.constants';
+import { CUSTOM_USER_COMMAND_SERVICE } from 'src/command-manager/command-manager.constants';
 
 /*
   @author AJu (zoz0312)
@@ -46,14 +48,28 @@ export class CommandManagerController {
       const command = userCommand.split(' ')[0];
       const myRoom = await this.rooms.findMyRoom(room);
 
-      commandList.map(command => {
-
-      })
       for (let i=0; i<commandList.length; i++) {
         const type = commandList[i];
-        // const {
-        //   command: 
-        // } = commandList[i];
+        const {
+          command: cmd,
+          service,
+          name,
+        } = commandList[i];
+
+        if (cmd.includes(command)) {
+          switch (service) {
+            case PARTY_MANAGER_SERVICE:
+              this.partyManager.mainService(chatBotInput, name);
+              break;
+            case PARTY_USER_MANAGER_SERVICE:
+              break;
+            case CUSTOM_USER_COMMAND_SERVICE:
+              break;
+            case WORKING_LIST_MANAGER_SERVICE:
+              break;
+          }
+        }
+
         if (type.command.includes(command)) {
           switch (type.name) {
             case FIND_PARTY:

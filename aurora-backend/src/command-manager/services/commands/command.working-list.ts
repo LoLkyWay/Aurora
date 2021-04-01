@@ -1,10 +1,10 @@
-import { CREATE_WORKING, DELETE_WORKING, UPDATE_WORKING } from "src/command-manager/command-manager.constants";
+import { CREATE_WORKING, DELETE_WORKING, UPDATE_WORKING, WORKING_LIST_MANAGER_SERVICE } from "src/command-manager/command-manager.constants";
 
 /*
   @author AJu (zoz0312)
   룽지님 working list
 */
-const service = 'workingListManagerService';
+const service = WORKING_LIST_MANAGER_SERVICE;
 export const commandWorkingListManager: commandDTO[] = [
   {
     service,

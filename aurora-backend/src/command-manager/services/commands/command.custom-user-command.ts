@@ -1,10 +1,10 @@
-import { CREATE_USER_COMMNAD, DELETE_USER_COMMAND, READ_USER_COMMAND, SHOW_USER_COMMAND_LIST } from "src/command-manager/command-manager.constants";
+import { CREATE_USER_COMMNAD, CUSTOM_USER_COMMAND_SERVICE, DELETE_USER_COMMAND, READ_USER_COMMAND, SHOW_USER_COMMAND_LIST } from "src/command-manager/command-manager.constants";
 
 /*
   @author AJu (zoz0312)
   User Command 추가를 위한 명령어 목록
 */
-const service = 'customUserCommandService';
+const service = CUSTOM_USER_COMMAND_SERVICE;
 export const commandCustomUserCommand: commandDTO[] = [
   {
     service,

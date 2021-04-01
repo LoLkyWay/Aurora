@@ -4,6 +4,7 @@ import { translateParty2String } from '../command-manager.controller';
 import { trimInput } from '../../common/trimInput';
 import { ChatBotInput, ChatBotOutput } from 'src/common/dtos/chatBot.dto';
 import { Injectable } from '@nestjs/common';
+import { CREATE_PARTY, DELETE_PARTY, FIND_PARTY, PARTY_PRINT_JSON } from '../command-manager.constants';
 
 /*
   @author AJu (zoz0312)
@@ -13,6 +14,27 @@ import { Injectable } from '@nestjs/common';
 export class PartyManager {
   constructor (
   ) {
+  }
+
+  mainService (
+    chatBotInput :ChatBotInput,
+    name: string,
+  ): ChatBotOutput {
+    switch (name) {
+      case FIND_PARTY:
+        return this.findParty(chatBotInput);
+      case PARTY_PRINT_JSON:
+        return this.printPartyJson();
+      case CREATE_PARTY:
+        return this.createParty(chatBotInput);
+      case DELETE_PARTY:
+        return this.deleteParty(chatBotInput);
+      default:
+        return {
+          success: false,
+          message: `${name}은 잘못 되었습니다.`
+        }
+    }
   }
 
   findParty (
